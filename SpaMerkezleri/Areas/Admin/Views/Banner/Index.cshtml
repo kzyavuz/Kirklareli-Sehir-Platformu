@@ -1,0 +1,50 @@
+﻿
+@model IEnumerable<banner>
+
+@{
+    ViewData["Title"] = "Banner Alanı";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var i = 1;
+}
+
+<h1>Banner Alanı</h1>
+<a href="/Admin/Banner/AddBanner/" class="btn btn-success mb-3">Banner Oluştur</a>
+
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <th>#</th>
+            <th>Banner Resimi</th>
+            <th>Banner Linki</th>
+            <th>Durumu</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>@i</td>
+        <td><img src="/bannerImage/@item.BannerImg" style="width:50px;height:50px;" /></td>
+        <td style="word-break:keep-all;">@item.BannerUrl</td>
+        <td>
+            <form asp-controller="Banner" asp-action="Status" asp-route-id="@item.BannerID">
+                <button type="submit" class="btn @(item.BannerStatus ? "btn-success" : "btn-danger")">
+                    @(item.BannerStatus ? "Aktif" : "Pasif")
+                </button>
+            </form>
+        </td>
+
+        <td><a href="/Admin/Banner/UpdateBanner/@item.BannerID" class="btn btn-outline-warning">Güncelle</a></td>
+
+        <td>
+            <form asp-controller="Banner" asp-action="DeleteBanner" asp-route-id="@item.BannerID" method="post"  onsubmit="return confirm('Reklamı silmek iştediğinize eminmisiniz')">
+                <button type="submit" class="btn btn-danger">Sil</button>
+            </form>
+        </td>
+
+    </tr>
+            i++;
+        }
+    </table>
+</div>

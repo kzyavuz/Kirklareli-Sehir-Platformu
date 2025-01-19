@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "RejectProfesyonel";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Reddedilen Profesyonel Üyeler</h1>
+
+@await Html.PartialAsync("~/Areas/Admin/Views/PartialView/BackButton.cshtml")
+
+<p>@ViewBag.TotalRequests Tane Profesyonel Üye Reddedildi</p>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Ad</th>
+                <th>Email</th>
+                <th>Durum</th>
+                <th>İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.name</td>
+                    <td>@user.Email</td>
+                    <td>@user.Status</td>
+                    <td>
+                        <form asp-action="ApproveRequest" asp-route-id="@user.Id" method="post" style="display:inline;" onsubmit="return confirm('Profesyonel üye yapmak iştediğine eminmisin iştediğinize eminmisiniz')">
+                            <button type="submit" class="btn btn-success">Onayla</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

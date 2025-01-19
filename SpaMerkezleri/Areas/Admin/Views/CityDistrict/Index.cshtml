@@ -1,0 +1,36 @@
+﻿@model IEnumerable<CityDistrict>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int sayac = 1;
+}
+
+
+<h1>İlçeler</h1>
+
+<a class="btn btn-success mb-3" href="/Admin/CityDistrict/AddCityDistrict">İlan Tipi Ekle</a>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <th>#</th>
+            <th>Ilan Tipi</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@sayac</td>
+                <td>@item.Name</td>
+                <td><a class="btn btn-warning" href="/Admin/CityDistrict/UpdateCityDistrict/@item.ID">Güncelle</a></td>
+                <td>
+                    <form asp-controller="CityDistrict" asp-action="DeleteCityDistrict" asp-route-id="@item.ID" onsubmit="return confirm('İlçeyi silmek iştediğinize Eminmisiniz')">
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                    </form>
+                </td>
+            </tr>
+            sayac++;
+        }
+    </table>
+</div>
+

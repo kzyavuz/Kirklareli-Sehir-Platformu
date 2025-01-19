@@ -1,0 +1,41 @@
+﻿
+@model Blog
+
+@{
+    ViewData["Title"] = "Post";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<link href="~/blog/css/styles.css" rel="stylesheet" />
+
+<header class="masthead" style="background-image: url('/blogImage/@Model.ImagePath')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-9">
+                <div class="post-heading">
+                    <h1>@Model.Title</h1>
+                    <h2 class="subheading">@Model.SubTitle</h2>
+                    <span class="meta">
+                        @Model.Created.ToString("dd MMMM yyyy HH:ss", new System.Globalization.CultureInfo("tr-TR"))
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                @Html.Raw(Model.Content)
+            </div>
+        </div>
+    </div>
+</article>
+
+<div style="text-align:center;">
+    <a href="/Default/Index" class="btn btn-dark font-weight-bold mt-3 mb-4">
+        Ana Sayfaya Dön
+    </a>
+</div>

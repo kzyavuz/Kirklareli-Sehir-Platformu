@@ -1,0 +1,69 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KirklareliSehir.com</title>
+    <meta name="keywords" content=" Kırklareli turizm, Kırklareli şehir rehberi, Kırklareli gezilecek yerler, Kırklareli etkinlikler, Kırklareli tarihi mekanlar, Kırklareli yerel hizmetler, Kırklareli kültürü, Kırklareli doğa turizmi, Kırklareli yöresel lezzetler, Kırklareli haberler, Kırklareli'de yapılacak şeyler, Kırklareli yaşam rehberi" />
+    <meta name="description" content="Kırklareli'nin doğal güzellikleri, turistik mekanları, kültürel zenginlikleri ve yerel yaşam hakkında detaylı bilgiler sunan Kırklareli Şehir Platformu. Kırklareli'nde gezilecek yerler, etkinlikler, hizmetler ve daha fazlasını keşfedin." />
+    <meta name="author" content="kirklarelisehir.Com">
+    <link rel="canonical" href="https://kirklarelisehir.com/">
+
+    <meta property="og:title" content="Kırklareli Şehir Platformu - Bölgenin Turizm, Kültür ve Yaşam Rehberi">
+    <meta property="og:description" content="Kırklareli'nin doğal güzellikleri, turistik mekanları, kültürel zenginlikleri ve yerel yaşam hakkında detaylı bilgiler sunan Kırklareli Şehir Platformu. Kırklareli'nde gezilecek yerler, etkinlikler, hizmetler ve daha fazlasını keşfedin." />
+    <meta property="og:url" content="https://kirklarelisehir.com/">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:title" content="kirklarelisehir.Com">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link href="~/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    @await Component.InvokeAsync("_Header")
+    <div style="height: 100px;"></div>
+    @await Component.InvokeAsync("_Banner")
+
+    @RenderBody()
+
+    <footer>
+    </footer>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/popper/js/popper.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: '#richEditor',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+<!-- Default Statcounter code for Kırklareli Sehir  Analiz
+http://www.kirklarelisehir.com -->
+<script type="text/javascript">
+    var sc_project = 13041376;
+    var sc_invisible = 1;
+    var sc_security = "923cce57";
+</script>
+<script type="text/javascript"
+        src="https://www.statcounter.com/counter/counter.js" async></script>
+<noscript>
+    <div class="statcounter">
+        <a title="Web Analytics"
+           href="https://statcounter.com/" target="_blank">
+            <img class="statcounter"
+                 src="https://c.statcounter.com/13041376/0/923cce57/1/" alt="Web Analytics"
+                 referrerPolicy="no-referrer-when-downgrade">
+        </a>
+    </div>
+</noscript>
+<!-- End of Statcounter Code -->

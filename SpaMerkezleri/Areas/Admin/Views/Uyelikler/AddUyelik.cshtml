@@ -1,0 +1,48 @@
+﻿
+@model EntityLayer.Concrete.Uyelikler
+
+@{
+    ViewData["Title"] = "AddUyelik";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Üyelik Kartı Ekleme Sayfası</h1>
+
+@await Html.PartialAsync("~/Areas/Admin/Views/PartialView/BackButton.cshtml")
+
+<form method="post">
+    <div class="form-group mb-3">
+        <label>Üyelik Tipi</label>
+        <select class="form-control select2" id="ilanCesidi" asp-for="UyelikTipi" required>
+            <option>Seçiniz</option>
+            <option value="STANDART">STANDART</option>
+            <option value="PROFESYONEL">PROFESYONEL</option>
+        </select>
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Yıllık Abonelik Ücreti</label>
+        <input type="text" asp-for="YillikUyelik" class="form-control" />
+    </div>
+
+    <div class="form-group mb-5">
+        <label>Üyelik Kartı Özellikleri - ('.' isaretinden sonra yeni bir satır açılır.)</label>
+        <textarea rows="6" type="text" asp-for="Ozellikler" placeholder="Buraya üyelik kartlarının özelliklerini yazınız." class="form-control"></textarea>
+    </div>
+    <button class="btn btn-outline-success mb-5">Kaydet</button>
+</form>
+
+@section Scripts{
+    <script>
+        document.getElementById('uyelikTipi').addEventListener('change', function () {
+            var uyelikTipi = this.value;
+            var yillikUyelikInput = document.getElementById('yillikUyelik');
+
+            if (uyelikTipi === 'PROFESYONEL') {
+                yillikUyelikInput.disabled = false;
+            } else {
+                yillikUyelikInput.disabled = true;
+                yillikUyelikInput.value = ''; // Eğer diğer bir seçeneğe geçilirse alanı boşalt
+            }
+        });</script>
+}

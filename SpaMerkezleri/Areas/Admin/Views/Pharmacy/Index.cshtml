@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Pharmacy>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int sayac = 1;
+}
+
+<h1>Nöbetçi Ezcaneler</h1>
+
+<a class="btn btn-success mb-3" href="/Admin/Pharmacy/AddPharmacy">Eczane Ekle</a>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <th>#</th>
+            <th>Eczane Adı</th>
+            <th>İlçe</th>
+            <th>Telefon Numarası</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@sayac</td>
+                <td>@item.PharmacyName</td>
+                <td>@item.District</td>
+                <td>@item.PhoneNumber</td>
+                <td><a class="btn btn-warning" href="/Admin/Pharmacy/UpdatePharmacy/@item.ID">Güncelle</a></td>
+                <td>
+                    <form asp-controller="Pharmacy" asp-action="DeletePharmacy" asp-route-id="@item.ID" onsubmit="return confirm('Eczaneyi silmek iştediğinize eminmisiniz')">
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                    </form>
+                </td>
+            </tr>
+            sayac++;
+        }
+    </table>
+</div>

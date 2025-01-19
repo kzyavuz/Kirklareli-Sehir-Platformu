@@ -1,0 +1,102 @@
+﻿@import url(//fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800);
+
+.pricing1 {
+    font-family: "Montserrat", sans-serif;
+    color: #8d97ad;
+    font-weight: 300;
+}
+
+    .pricing1 h1,
+    .pricing1 h2,
+    .pricing1 h3,
+    .pricing1 h4,
+    .pricing1 h5,
+    .pricing1 h6 {
+        color: #3e4555;
+    }
+
+    .pricing1 .font-weight-medium {
+        font-weight: 500;
+    }
+
+    .pricing1 .bg-light {
+        background-color: #f4f8fa !important;
+    }
+
+    .pricing1 .subtitle {
+        color: #8d97ad;
+        line-height: 24px;
+        font-size: 14px;
+    }
+
+    .pricing1 .btn-success-gradiant {
+        background: linear-gradient(to right, #63eeea 0%, #6ccd59 100%);
+        color: white;
+        width:100%;
+        border: none;
+    }
+
+        .pricing1 .btn-success-gradiant:hover {
+            background: linear-gradient(to right, #25c107 0%, #0eeee8 100%);
+            border: none;
+        }
+
+    .pricing1 .btn-danger-gradiant {
+        background: linear-gradient(to right, #ff569c 0%, #ff4e4e 100%);
+        border: none;
+        width: 100%;
+        color: white;
+    }
+
+        .pricing1 .btn-danger-gradiant:hover {
+            background: linear-gradient(to right, #ea0c0c 0%, #f73183 100%);
+            border: none;
+        }
+
+    .pricing1 .btn-md {
+        padding: 15px 30px;
+        font-size: 16px;
+    }
+
+.switch-container {
+    text-align: center;
+}
+
+.card {
+    position: relative;
+    min-height: 450px;
+    overflow: hidden;
+}
+
+.card-body {
+    padding-bottom: 60px; /* Buton için alt kısmında boşluk bırakıyoruz */
+}
+
+.bottom-btn {
+    position: absolute;
+    width: 92%;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#basvuruTH, #uyelikButonuTD {
+    text-align: end;
+}
+
+@media (max-width: 700px) {
+    .pricing1 .btn-success-gradiant {
+        padding: 5px;
+    }
+}
+
+.alert {
+    position: absolute;
+    width: 60%;
+    text-align: center;
+    left: 20%;
+    height: 100px;
+    z-index: 1;
+    top: 80px;
+    padding:inherit;
+}

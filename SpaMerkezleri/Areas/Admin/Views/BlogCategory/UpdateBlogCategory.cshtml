@@ -1,0 +1,20 @@
+﻿@model BlogCategory
+@{
+    ViewData["Title"] = "UpdateBlogCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h1>Şehirde Öne Çıkanlar Kategori Güncelleme Sayfası</h1>
+
+@await Html.PartialAsync("~/Areas/Admin/Views/PartialView/BackButton.cshtml")
+
+<form method="post">
+    <input type="hidden" asp-for="ID" />
+    <div class="form-group mb-3">
+        <label>Kategori Adı</label>
+        <input type="text" asp-for="CategoryName" class="form-control" />
+    </div>
+
+    <button class="btn btn-outline-warning mb-5">Güncelle</button>
+</form>

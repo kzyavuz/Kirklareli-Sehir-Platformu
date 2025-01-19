@@ -1,0 +1,51 @@
+﻿
+@model IEnumerable<AppUser>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var message = "Merhaba, KirklareliSehir.Com yöneticisi olarak profesyonel üyelik başvurunuzla ilgili sizinle iletişime geçiyorum. Başvurunuz hakkında daha fazla bilgi almak için bana geri dönüş yapabilirsiniz. Teşekkürler.";
+    var encodedMessage = Uri.EscapeDataString(message);
+
+}
+
+<h1>Onay Bekleyen Profesyonel Üye İştekleri</h1>
+<a href="/Admin/ProfesyonelMember/ApprovedProfesyonelUser" class="btn btn-success mb-3 mx-3">Onaylanan Profesyonel Üye İştekleri</a>
+<a href="/Admin/ProfesyonelMember/RejectProfesyonel" class="btn btn-danger mb-3 mx-3">Reddedilen Profesyonel Üye İştekleri</a>
+<p>@ViewBag.TotalRequests Tane Profesyonel Üye Beklemede</p>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Ad</th>
+                <th>Email</th>
+                <th>Telefon Numarası</th>
+                <th>İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+            <tr>
+                <td>@user.name</td>
+                <td>@user.Email</td>
+                <td>
+                    <a class="btn btn-success p-2 font-weight-bolder" href="https://wa.me/@(user.PhoneNumber.Replace(" ", "").Replace("(", "").Replace(")", "").Replace("-", ""))?text=@encodedMessage" target="_blank">
+                        @user.PhoneNumber
+                    </a>
+                </td>
+
+                <td>
+                    <form asp-action="ApproveRequest" asp-route-id="@user.Id" method="post" style="display:inline;" onsubmit="return confirm('Profesyonel üye yapmak iştediğine eminmisin iştediğinize eminmisiniz')">
+                        <button type="submit" class="btn btn-success">Onayla</button>
+                    </form>
+                    <form asp-action="RejectRequest" asp-route-id="@user.Id" method="post" style="display:inline;" onsubmit="return confirm('Profesyonel üyeyi kaldırmak iştediğine eminmisin iştediğinize eminmisiniz')">
+                        <button type="submit" class="btn btn-danger">Reddet</button>
+                    </form>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

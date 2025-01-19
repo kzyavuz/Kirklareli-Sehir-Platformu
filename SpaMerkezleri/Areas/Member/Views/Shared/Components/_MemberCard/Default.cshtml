@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Uyelikler>
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Üyelik Planları";
+    Layout = "~/Views/Shared/MemberLayout.cshtml";
+}
+<link rel="stylesheet" href="~/css/pricingCards.css">
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        <p class="my-auto">@TempData["SuccessMessage"]</p>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        <p class="my-auto">@TempData["ErrorMessage"]</p>
+    </div>
+}
+
+<div class="pricing1 py-1 bg-light">
+    <div class="container" style="max-width: 1300px;">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h3 class="mt-3 font-weight-medium mb-1">PLATFORMUMUZA ÜYE OLARAK DAHA BÜYÜK KİTLELERE ULAŞIN</h3>
+                <h6 class="subtitle">% 100 memnuniyet Garantisi sunuyoruz</h6>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    var formattedNumber = item.YillikUyelik.ToString("N0", new CultureInfo("tr-TR")) + " ₺";
+
+                    if (ViewBag.UyeTipi == "STANDART" || (ViewBag.UyeTipi == "PROFESYONEL" && item.UyelikTipi == "PROFESYONEL"))
+                    {
+                        <div class="col-lg-4 col-md-6 membership-card">
+                            <div class="card text-center card-shadow on-hover border-0 mb-4" style="position: relative;">
+                                <div class="card-body font-14" style="padding: 3%; padding-bottom: 60px;">
+                                    <h5 class="mt-3 mb-1 font-weight-bold">@item.UyelikTipi ÜYELİK</h5>
+                                    <div class="pricing my-3">
+                                        <span class="display-5">@formattedNumber</span>
+                                    </div>
+                                    @if (item.Ozellikler != null)
+                                    {
+                                        <ul class="list-inline">
+                                            @foreach (var feature in item.Ozellikler.Split('.'))
+                                            {
+                                                <li class="d-block py-2"> 📌 @feature.Trim()</li>
+                                            }
+                                        </ul>
+                                    }
+                                </div>
+                                <div class="bottom-btn">
+                                    @if (item.UyelikTipi == "PROFESYONEL" && ( ViewBag.Status == null || ViewBag.Status == "Reddedildi" ))
+                                    {
+                                        <form asp-controller="Profile" asp-action="ProfesyonelMemberUpdate" onsubmit="return confirm(`Profesyonel üyelik talebi yaptıktan sonra emin misin yazısı : Profesyonel Üyelik Talebinde bulundunuz. Talebiniz en kısa zamanda işleme alınacaktır. İlginize teşekkür ediyoruz.`)">
+                                            <button type="submit" class="btn btn-danger-gradiant btn-md text-white btn-block text-decoration-none">
+                                                <span>Profesyonel Üye Ol</span>
+                                            </button>
+                                        </form>
+                                    }
+                                    @if (item.UyelikTipi == "PROFESYONEL" && ViewBag.Status == "Onay Bekliyor" && ViewBag.UyeTipi == "STANDART")
+                                    {
+                                        <button class=" btn btn-secondary text-white btn-block">
+                                            <span>Onay Beklemede</span>
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                alert.style.opacity = '0';
+                setTimeout(() => {
+                    alert.remove();
+                }, 500);
+            }, 3000);
+        });
+    });
+</script>

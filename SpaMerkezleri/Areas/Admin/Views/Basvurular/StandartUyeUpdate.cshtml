@@ -1,0 +1,196 @@
+﻿
+@model SpaMerkezleri.Models.UpdateIsletmeForm
+@{
+    ViewData["Title"] = "StandartUyeUpdate";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>İşletme Güncelleme Sayfası</h1>
+
+@await Html.PartialAsync("~/Areas/Admin/Views/PartialView/BackButton.cshtml")
+
+<html>
+<head>
+    <title>Standart İşletme Formu</title>
+    <link rel="stylesheet" href="~/css/form.css" />
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="container">
+            <!-- Title -->
+            <div class="d-flex justify-content-between align-items-lg-center py-3 flex-column flex-lg-row">
+                <h2 class="h5 mb-3 mb-lg-0">Standart Basvuru Formu</h2>
+                <div class="hstack gap-3"></div>
+            </div>
+
+            <form method="post" action="StandartUyeUpdate" class="validate-form" enctype="multipart/form-data">
+                <input type="hidden" asp-for="IsletmeID">
+                <input type="hidden" asp-for="MessageDate" value="@Model.MessageDate">
+                <div class="row">
+                    <!-- Left side -->
+                    <div class="col-lg-8">
+                        <!-- Basic information -->
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h3 class="h6 mb-4">Kisisel Bilgiler</h3>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Ad</label>
+                                            <input type="text" class="form-control" asp-for="IsletmeUyeAdi" required>
+                                            <span asp-validation-for="IsletmeUyeAdi" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Soy Ad</label>
+                                            <input type="text" class="form-control" asp-for="IsletmeUyeSoyAdi" required>
+                                            <span asp-validation-for="IsletmeUyeSoyAdi" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Mail</label>
+                                            <input type="email" class="form-control" asp-for="IsletmeUyeMail" required>
+                                            <span asp-validation-for="IsletmeUyeMail" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Telefon Numarası</label>
+                                            <input type="text" class="form-control" asp-for="IsletmeTelefonNumarasi" required>
+                                            <span asp-validation-for="IsletmeTelefonNumarasi" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Address -->
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h3 class="h6 mb-4">İşletme Bilgileri</h3>
+                                <div class="mb-3">
+                                    <label class="form-label">İşletme Çeşidi</label>
+                                    <select class="form-control select2" asp-for="IsletmeTipi" required>
+                                        <option>Seçiniz</option>
+                                        @foreach (var tip in ViewBag.IsletmeTipleri)
+                                        {
+                                            <option value="@tip">@tip</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">İsletme Adı</label>
+                                    <input type="text" class="form-control" asp-for="ISletmeAdi" required>
+                                    <span asp-validation-for="ISletmeAdi" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">İsletme Açık Adres</label>
+                                    <input type="text" class="form-control" asp-for="IsletmeAcikKonum">
+                                    <span asp-validation-for="IsletmeAcikKonum" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h3 class="h6 mb-4">Sayfanızdaki Açıklamanız</h3>
+                                <div class="mb-3">
+                                    <label class="form-label">İşletmeniz Hakkında bilgi giriniz</label>
+                                    <textarea id="richEditor"  class="form-control" asp-for="ISletmeNot" rows="5" cols="50"></textarea>
+                                    <span asp-validation-for="ISletmeNot" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right side -->
+                    <div class="col-lg-4">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h3 class="h6">İşletme İnstagram Adı</h3>
+                                <input class="form-control" type="text" asp-for="IsletmeInstagram">
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h3 class="h6">İşletme Kapak Resimi ve Logosu</h3>
+                                <div class="mb-3">
+                                    <label class="form-label">İşletme Resimi</label>
+                                    <input class="form-control" type="file" asp-for="IsletmeResimi">
+                                    @if (!string.IsNullOrEmpty(Model.ExistingImagePath))
+                                    {
+                                        <img src="~/IsletmelerinResmi/@Model.ExistingImagePath" alt="İşletme Resimi" class="img-thumbnail mt-2" style="max-width: 100px;">
+                                    }
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">İşletme Logo</label>
+                                    <input class="form-control" type="file" asp-for="IsletmeLogo">
+                                    @if (!string.IsNullOrEmpty(Model.LogoYolu))
+                                    {
+                                        <img src="~/IsletmelerinResmi/@Model.LogoYolu" alt="İşletme Logo" class="img-thumbnail mt-2" style="max-width: 100px;">
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h3 class="h6">Eşki İşletme Resimleri</h3>
+                                <h3 class="h6 text-danger">Güncel Resimleri Görmek İçin Güncelle Butonuna Tıklayınız</h3>
+                                <div class="mb-3">
+                                    <label class="form-label">İşletme Resimi1</label>
+                                    <input class="form-control" type="file" asp-for="IsletmeResimi1">
+                                    @if (!string.IsNullOrEmpty(Model.ExistingImagePath1))
+                                    {
+                                        <img src="~/IsletmelerinResmi/@Model.ExistingImagePath1" alt="İşletme Resimi" class="img-thumbnail mt-2" style="max-width: 100px;">
+                                    }
+                                </div><div class="mb-3">
+                                    <label class="form-label">İşletme Resimi2</label>
+                                    <input class="form-control" type="file" asp-for="IsletmeResimi2">
+                                    @if (!string.IsNullOrEmpty(Model.ExistingImagePath2))
+                                    {
+                                        <img src="~/IsletmelerinResmi/@Model.ExistingImagePath2" alt="İşletme Resimi" class="img-thumbnail mt-2" style="max-width: 100px;">
+                                    }
+                                </div><div class="mb-3">
+                                    <label class="form-label">İşletme Resimi3</label>
+                                    <input class="form-control" type="file" asp-for="IsletmeResimi3">
+                                    @if (!string.IsNullOrEmpty(Model.ExistingImagePath3))
+                                    {
+                                        <img src="~/IsletmelerinResmi/@Model.ExistingImagePath3" alt="İşletme Resimi" class="img-thumbnail mt-2" style="max-width: 100px;">
+                                    }
+                                </div><div class="mb-3">
+                                    <label class="form-label">İşletme Resimi4</label>
+                                    <input class="form-control" type="file" asp-for="IsletmeResimi4">
+                                    @if (!string.IsNullOrEmpty(Model.ExistingImagePath4))
+                                    {
+                                        <img src="~/IsletmelerinResmi/@Model.ExistingImagePath4" alt="İşletme Resimi" class="img-thumbnail mt-2" style="max-width: 100px;">
+                                    }
+                                </div><div class="mb-3">
+                                    <label class="form-label">İşletme Resimi5</label>
+                                    <input class="form-control" type="file" asp-for="IsletmeResimi5">
+                                    @if (!string.IsNullOrEmpty(Model.ExistingImagePath5))
+                                    {
+                                        <img src="~/IsletmelerinResmi/@Model.ExistingImagePath5" alt="İşletme Resimi" class="img-thumbnail mt-2" style="max-width: 100px;">
+                                    }
+                                </div><div class="mb-3">
+                                    <label class="form-label">İşletme Resimi6</label>
+                                    <input class="form-control" type="file" asp-for="IsletmeResimi6">
+                                    @if (!string.IsNullOrEmpty(Model.ExistingImagePath6))
+                                    {
+                                        <img src="~/IsletmelerinResmi/@Model.ExistingImagePath6" alt="İşletme Resimi" class="img-thumbnail mt-2" style="max-width: 100px;">
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <input type="submit" value="Güncelle" class="btn btn-primary btn-block">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

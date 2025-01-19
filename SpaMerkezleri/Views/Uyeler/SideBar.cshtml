@@ -1,0 +1,39 @@
+﻿
+
+<ul class="menu-inner py-1">
+    <!-- Dashboard -->
+    <li class="menu-item">
+        <a href="/Member/Profile/Index/" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <div data-i18n="Analytics">Ana Sayfa</div>
+        </a>
+    </li>
+
+    <li class="menu-item">
+        <a href="/Member/Isletme/Index/" class="menu-link">
+            <i class="menu-icon tf-icons bx bxs-city"></i>
+            <div data-i18n="Analytics">İşletmelerim</div>
+        </a>
+    </li>
+
+    <li class="menu-item">
+        <a href="/Member/Ilan/Index/" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-pencil"></i>
+            <div data-i18n="Analytics">İlan Sayfası</div>
+        </a>
+    </li>
+
+    <li class="menu-item">
+        <a href="/Member/ProfileDesign/Index/" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-lock"></i>
+            <div data-i18n="Analytics">Sifre Güncelle</div>
+        </a>
+    </li>
+
+    <li class="menu-item my-5">
+        <form asp-action="MemberLogout" asp-controller="MemberLogin" method="post" class="form-inline">
+            <button type="submit" class="btn btn-outline-danger d-flex mx-auto">Çıkış Yap</button>
+        </form>
+    </li>
+
+</ul>

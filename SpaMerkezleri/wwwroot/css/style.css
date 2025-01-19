@@ -1,0 +1,65 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.header-area {
+    background-color: #283606;
+}
+
+
+.icon {
+    height: 50px;
+    width: 50px;
+}
+
+select {
+    padding: 15px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.depo, .populer-isletme {
+    margin: 0px 8px;
+}
+
+.alt-linkler {
+    padding: 0px 16px;
+}
+
+footer {
+    margin: 0px;
+    background: linear-gradient(to right, #738c00 0%, #283606 100%);
+    height: 100px;
+    width: 100%;
+}
+
+.button {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #33705d;
+    border-radius: 20px;
+}
+
+    .button:hover {
+        background-color: #408671;
+    }
+    .button:after {
+        background-color: #2c705c;
+    }
+
+h5, h2, h1, .ml-0 {
+    margin: 0px;
+}

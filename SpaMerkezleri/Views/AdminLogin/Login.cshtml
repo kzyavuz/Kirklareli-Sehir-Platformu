@@ -1,0 +1,37 @@
+﻿@model SpaMerkezleri.Models.UserSignIn
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/css/login.css" rel="stylesheet" />
+    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <title>Admin Giriş Sayafası</title>
+
+</head>
+<body>
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <div class="fadeIn first">
+                <img src="/site/login.png" id="icon" alt="User Icon" class="my-4" />
+            </div>
+
+            <form method="post">
+                <input type="text" id="login" class="fadeIn second" asp-for="userName" placeholder="Kullanıcı Adı" required>
+                <input type="text" id="password" class="fadeIn third" asp-for="userPassword" placeholder="Sifre" required>
+                <input type="submit" class="fadeIn fourth my-3" value="Giriş Yap">
+            </form>
+        </div>
+    </div>
+
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+</body>
+</html>

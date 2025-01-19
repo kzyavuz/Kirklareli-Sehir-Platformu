@@ -1,0 +1,16 @@
+﻿@model string
+
+<link rel="stylesheet" href="~/css/HomePageButton.css" />
+
+<div>
+    @if (!string.IsNullOrEmpty(Model))
+    {
+        <a href="@Model" target="_blank">
+            <img class="btnimg" src="~/site/taksi.jpg" />
+        </a>
+    }
+    else
+    {
+
+    }
+</div>

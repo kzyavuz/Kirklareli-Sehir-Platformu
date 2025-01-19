@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Isletmeler>
+
+@{
+    ViewData["Title"] = "İşletmeler";
+    Layout = "~/Views/Shared/MemberLayout.cshtml";
+}
+
+<a class="btn btn-success mb-4" href="/Member/StandartUye/">İşletme Kaydı Yap</a>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Sayfayı Gör</th>
+                <th>Ad Soyad</th>
+                <th>İşletme Adı</th>
+                <th>İşletme Tipi</th>
+                <th>Telefon</th>
+                <th>İşletme Logo</th>
+                <th>İşletme Fotoğraf</th>
+                <th>Onay Durumu</th>
+                <th>Sil</th>
+                <th>Güncelle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                //var rowStyle = item.Uyelikler.UyelikTipi == "PROFESYONEL"
+                //    ? "background: linear-gradient(to right, #ff569c 0%, #ff4e4e 100%); -webkit-text-fill-color: transparent; background-clip: text;"
+                //    : item.Uyelikler.UyelikTipi == "STANDART"
+                //        ? "background: linear-gradient(to right, #63eeea 0%, #6ccd59 100%); -webkit-text-fill-color: transparent; background-clip: text;"
+                //        : "";
+
+                <tr>
+                    <td><a href="/ISletmeleriListele/IsletmeDetayları/@item.IsletmeID" class="btn btn-primary">Git</a></td>
+                    <td style="word-break: keep-all; ">@item.IsletmeUyeAdi @item.IsletmeUyeSoyAdi</td>
+                    <td style="word-break: keep-all; ">@item.ISletmeAdi</td>
+                    <td style="word-break: keep-all; ">@item.ISletmeTipi</td>
+                    <td style="word-break: keep-all; ">@item.IsletmeTelefonNumarasi</td>
+                    <td><img style="height:50px; width:50px" src="~/IsletmelerinResmi/@item.IsletmeLogo" /></td>
+                    <td><img style="height:50px; width:50px" src="~/IsletmelerinResmi/@item.IsletmeResimi" /></td>
+                    <td class="text-@((item.Status == "Onay Bekliyor") ? "warning" : (item.Status == "Onaylandı") ? "success" : "danger")">@item.Status</td>
+                    <td>
+                        <form asp-controller="ISletme" asp-action="Delete" asp-route-id="@item.IsletmeID" method="post" onsubmit="return confirm('İşletme kaydınızı silmek istediğinize emin misiniz?')">
+                            <button type="submit" class="btn btn-danger">Sil</button>
+                        </form>
+                    </td>
+                    <td><a href="@Url.Action("StandartUyeUpdate", "ISletme", new { id = item.IsletmeID })" class="btn btn-outline-warning">Güncelle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

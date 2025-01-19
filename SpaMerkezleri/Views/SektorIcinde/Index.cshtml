@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Sektor>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<link href="~/css/blog.css" rel="stylesheet" />
+@* Page Header *@
+<header class="masthead" style="background-image: url('@ViewBag.Img')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1 class="mb-5 font-weight-bold" style="box-shadow: 0px 0px 20px black; color: black;">Şehrin Dinamikleri</h1>
+                    <small class="justify-content-end">@ViewBag.TotalBlogs Tane Yazı Mevcut</small>
+                </div>
+                <form method="get" action="@Url.Action("Index", "SektorIcinde")">
+                    <div class="mb-3">
+                        <label for="categoryFilter" class="form-label">Kategoriye Göre Filtrele</label>
+                        <select class="form-select" id="categoryFilter" name="categoryName" onchange="this.form.submit()">
+                            <option value="">Tüm Kategoriler</option>
+                            @foreach (var category in ViewBag.Categories)
+                            {
+                                var selectedCategory = ViewContext.HttpContext.Request.Query["categoryName"].ToString();
+                                if (category == selectedCategory)
+                                {
+                                    <option value="@category" selected>@category</option>
+                                }
+                                else
+                                {
+                                    <option value="@category">@category</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="row d-flex my-4 mx-2" id="blogContainer">
+    @foreach (var item in Model)
+    {
+        <div class="px-3 col-lg-3 col-md-4 col-sm-12">
+            <div class="post-preview">
+                <div class="align-items-center">
+                    <a href="~/SektorIcinde/Post/@item.Id">
+                        <img style="height:200px;width:100%; object-fit:cover;" src="~/sektorImage/@item.ImagePath" />
+                    </a>
+                    <div class="mt-4">
+                        <div style="max-height: 130px; min-height: 130px; overflow-y: auto;">
+                            <h2 class="post-title text-center">@item.Title</h2>
+                            @if (item.SubTitle != null && item.SubTitle.Length > 100)
+                            {
+                                <h3 class="post-subtitle">@item.SubTitle.Substring(0, 100) ...</h3>
+                            }
+                            else
+                            {
+                                <h3 class="post-subtitle">@item.SubTitle</h3>
+                            }
+                        </div>
+                        <p class="post-meta mb-0" style="text-align:end;">
+                            @item.Created.ToString("dd MMMM yyyy HH:ss")'de yayınlandı
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div style="text-align:center;">
+    <a href="/Default/Index" class="btn btn-dark font-weight-bold mt-3 mb-4">
+        Ana Sayfaya Dön
+    </a>
+</div>
+
+@if (ViewBag.TotalBlogs > Model.Count())
+{
+    <div class="d-flex justify-content-end mb-4">
+        <button class="btn btn-dark text-uppercase mx-4" style="color: #eeeeee;" id="loadMore">Daha Fazla →</button>
+    </div>
+}
+
+<script>
+    var currentPage = 1;
+    document.getElementById('loadMore').addEventListener('click', function () {
+        var selectedCategory = document.getElementById('categoryFilter').value; // Seçilen kategori
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/SektorIcinde/GetMoreBlogs?page=' + currentPage + '&categoryName=' + selectedCategory, true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                var newBlogs = xhr.responseText;
+                var blogContainer = document.getElementById('blogContainer');
+                blogContainer.innerHTML += newBlogs.trim();
+
+                currentPage++;
+
+                // Eğer daha fazla blog yoksa butonu gizle
+                if (newBlogs.trim() === '') {
+                    document.getElementById('loadMore').style.display = 'none';
+                }
+            }
+        };
+        xhr.send();
+    });
+</script>

@@ -1,0 +1,29 @@
+﻿@model List<AppUser>
+@{
+    ViewData["Title"] = "UserList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Kullanıcı Listesi</h1>
+
+<a href="/Member/MemberLogin/MSignUp/" class="btn btn-primary mb-3">Yeni Kullanıcı Olustur</a>
+<table class="table table-bordered">
+    <tr>
+        <td>Kullanıcı Ad</td>
+        <td>Rol Ad</td>
+        <td>Sil</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.UserName</td>
+            <td><a href="/Admin/Rol/AssignRole/@item.Id" class="btn btn-warning">Rol Ata</a></td>
+            <td>
+                <form class="" asp-controller="Rol" asp-action="DeleteUser" asp-area="admin" asp-route-id="@item.Id" onsubmit="return confirm('Kullanıcıyı silmek iştediğinize eminmisiniz')">
+                    <button type="submit" class="btn btn-danger">Kullanıcıyı Sil</button>
+                </form>
+            </td>
+        </tr>
+
+    }
+</table>

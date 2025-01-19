@@ -1,0 +1,18 @@
+﻿@model IlanFormIsletmeler
+@{
+    ViewData["Title"] = "AddIlanTipi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>İlan Tipi Ekleme Sayfası</h1>
+
+@await Html.PartialAsync("~/Areas/Admin/Views/PartialView/BackButton.cshtml")
+
+<form method="post">
+    <div class="form-group mb-3">
+        <label>İlan Tipi</label>
+        <input type="text" asp-for="Name" class="form-control" />
+    </div>
+
+    <button class="btn btn-outline-success mb-5">Ekle</button>
+</form>

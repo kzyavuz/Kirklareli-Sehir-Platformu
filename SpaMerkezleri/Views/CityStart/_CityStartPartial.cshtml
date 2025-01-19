@@ -1,0 +1,17 @@
+﻿@model IEnumerable<CityStart>
+
+@foreach (var item in Model)
+{
+    <div class="px-3 col-lg-2 col-md-3 col-sm-4">
+        <div class="post-preview ">
+            <div class="align-items-center">
+                <a href="~/CityStart/Post/@item.Id">
+                    <img style="width: -webkit-fill-available;" src="~/images/CityStart/@item.ImagePath" />
+                </a>
+                <div class="mt-4">
+                    <h6 style="height:50px;" class="post-title">@item.Title</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+}

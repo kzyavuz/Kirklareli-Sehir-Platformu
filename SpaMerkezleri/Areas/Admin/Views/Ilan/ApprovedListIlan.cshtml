@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Ilanlar>
+
+@{
+    ViewData["Title"] = "ApprovedListIlan";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Onaylanan İlan Listeleri</h1>
+
+@await Html.PartialAsync("~/Areas/Admin/Views/PartialView/BackButton.cshtml")
+
+<p>@ViewBag.TotalIlan Tane İlan Mevcut</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>İlan Resimi</th>
+                <th>İlan Tarihi</th>
+                <th>İlan Tipi</th>
+                <th>İşletme</th>
+                <th>Telefon</th>
+                <th>Öne Çıkma Durumu</th>
+                <th>Reddet</th>
+                <th>Sil</th>
+                <th>Güncelle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="word-break: keep-all;"><img src="~/IlanImage/@item.ImagePath" style="width:100px; object-fit:contain;" /></td>
+                    <td style="word-break: keep-all;">@item.ilanDate.ToString("dd MMMM yyyy HH:ss", new System.Globalization.CultureInfo("tr-TR"))</td>
+                    <td style="word-break: break-word;">@item.IlanCesidi </td>
+                    <td style="word-break: keep-all;">@item.IlanYeri</td>
+                    <td style="word-break: keep-all;">@item.İlanTelefonNo</td>
+
+                    @if (item.StandOutStatus == true)
+                    {
+                        <td>
+                            <form class="" asp-controller="Ilan" asp-action="StandOutFalse" asp-route-id="@item.IlanID" method="post" onsubmit="return confirm('İlanı öne çıkanlardan geri çekmek iştediğinize eminmisiniz')">
+                                <button type="submit" class="btn btn-success text-white">Aktif</button>
+                            </form>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <form class="" asp-controller="Ilan" asp-action="StandOutTrue" asp-route-id="@item.IlanID" method="post" onsubmit="return confirm('İlanı öne çıkarmak iştediğinize eminmisiniz')">
+                                <button type="submit" class="btn btn-danger text-white">Pasif</button>
+                            </form>
+                        </td>
+                    }
+                    <td>
+                        <form class="" asp-controller="Ilan" asp-action="ConvertToFalse" asp-route-id="@item.IlanID" method="post" onsubmit="return confirm('İlanı reddetmek iştediğinize eminmisiniz')">
+                            <input type="hidden" name="returnUrl" value="ApprovedListIlan" />
+                            <button type="submit" class="btn btn-danger text-white">X</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form class="" asp-controller="Ilan" asp-action="DeleteIlan" asp-route-id="@item.IlanID" method="post" onsubmit="return confirm('İlanı silmek iştediğinize Eminmisiniz')">
+                            <input type="hidden" name="returnUrl" value="ApprovedListIlan" />
+                            <button type="submit" class="btn btn-danger">Sil</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form class="" asp-controller="Ilan" asp-action="UpdateIlan" asp-route-id="@item.IlanID" method="get">
+                            <button type="submit" class="btn btn-warning">Güncelle</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

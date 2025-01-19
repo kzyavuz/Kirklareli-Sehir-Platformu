@@ -1,0 +1,26 @@
+﻿
+@model SpaMerkezleri.Areas.Admin.Models.bannerModel
+@{
+    ViewData["Title"] = "UpdateBanner";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Reklam Alanı Güncelleme </h1>
+
+@await Html.PartialAsync("~/Areas/Admin/Views/PartialView/BackButton.cshtml")
+
+<form method="post" enctype="multipart/form-data" action="UpdateBanner">
+    <div class="form-group">
+        <input type="hidden" asp-for="id" />
+        <label>Reklam Linki</label>
+        <input type="text" asp-for="bannerUrl" value="@Model.bannerUrl" class="form-control" />
+    </div>
+    <br />
+
+    <div class="form-group mb-4">
+        <label>Resim Seçiniz</label>
+        <input type="file" asp-for="bannerUrl" value="@Model.bannerImage" />
+    </div>
+
+    <button class="btn btn-outline-warning mb-5">Güncelle</button>
+</form>

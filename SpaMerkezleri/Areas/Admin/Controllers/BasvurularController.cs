@@ -1,0 +1,236 @@
+﻿using BusinessLayer.Abstract;
+using DataAccessLayer.Concrete;
+using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SpaMerkezleri.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace SpaMerkezleri.Areas.Admin.Controllers
+{
+
+    [Area("Admin")]
+    [Authorize(Roles = "admin")]
+    [Route("Admin/[controller]/[action]/{id?}")]
+    public class BasvurularController : Controller
+    {
+        private readonly Context _context;
+        private readonly IIsletmelerService _ısletmelerService;
+
+        public BasvurularController(Context context, IIsletmelerService ısletmelerService)
+        {
+            _context = context;
+            _ısletmelerService = ısletmelerService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var isletmeler = _context.Isletmelers.Where(x => x.Status == "Onay Bekliyor");
+            var isletme = await isletmeler.Include(i => i.AppUser).OrderByDescending(x => x.MessageDate).ToListAsync();
+
+            ViewBag.TotalIlan = isletmeler.Count();
+
+            return View(isletme);
+        }
+
+        public async Task<IActionResult> ApprovedBusinesses()
+        {
+            var isletmeler = _context.Isletmelers.Where(x => x.Status == "Onaylandı");
+            var isletme = await isletmeler.Include(i => i.AppUser).OrderByDescending(x => x.ApprovalDateTime).ToListAsync();
+
+            ViewBag.TotalIlan = isletmeler.Count();
+
+            return View(isletme);
+        }
+
+        public async Task<IActionResult> RejectedBusinesses()
+        {
+            var isletmeler = _context.Isletmelers.Where(x => x.Status == "Reddedildi");
+            var isletme = await isletmeler.Include(i => i.AppUser).OrderByDescending(x => x.RejectionDateTime).ToListAsync();
+
+            ViewBag.TotalIlan = isletmeler.Count();
+
+            return View(isletme);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, string returnUrl)
+        {
+            var isletme = await _context.Isletmelers.FindAsync(id);
+            if (isletme == null)
+            {
+                return NotFound();
+            }
+
+            // Resim dosyasını silme
+            if (!string.IsNullOrEmpty(isletme.IsletmeResimi))
+            {
+                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/IsletmelerinResmi", isletme.IsletmeResimi);
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+            }
+
+            // logo dosyasını silme
+            if (!string.IsNullOrEmpty(isletme.IsletmeLogo))
+            {
+                var imagePathe = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/IsletmelerinResmi", isletme.IsletmeLogo);
+                if (System.IO.File.Exists(imagePathe))
+                {
+                    System.IO.File.Delete(imagePathe);
+                }
+            }
+
+            _context.Isletmelers.Remove(isletme);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(returnUrl);
+        }
+
+        [HttpPost]
+        public IActionResult ConvertTrue(int id, string returnUrl)
+        {
+            _ısletmelerService.ConvertToTrueIsletme(id);
+            return RedirectToAction(returnUrl);
+        }
+
+        [HttpPost]
+        public IActionResult ConvertFalse(int id, string returnUrl)
+        {
+            _ısletmelerService.ConvertToFalseIsletme(id);
+            return RedirectToAction(returnUrl);
+        }
+
+        [HttpGet]
+        public IActionResult StandartUyeUpdate(int id)
+        {
+            var isletmeTipleri = _context.IsletmeTipleris
+            .Select(x => x.Name)
+            .Distinct()
+            .OrderBy(x => x)
+            .ToList();
+
+            ViewBag.IsletmeTipleri = isletmeTipleri ?? new List<string>();
+
+            var memberCard = _ısletmelerService.TGetByID(id);
+            var model = new UpdateIsletmeForm
+            {
+                IsletmeID = memberCard.IsletmeID,
+                IsletmeUyeAdi = memberCard.IsletmeUyeAdi,
+                IsletmeUyeSoyAdi = memberCard.IsletmeUyeSoyAdi,
+                IsletmeUyeMail = memberCard.IsletmeUyeMail,
+                IsletmeTelefonNumarasi = memberCard.IsletmeTelefonNumarasi,
+                ISletmeAdi = memberCard.ISletmeAdi,
+                IsletmeInstagram = memberCard.IsletmeInstagram,
+                IsletmeAcikKonum = memberCard.IsletmeAcikKonum,
+                ISletmeNot = memberCard.ISletmeNot,
+                LogoYolu = memberCard.IsletmeLogo,
+                IsletmeTipi = memberCard.ISletmeTipi,
+                ExistingImagePath = memberCard.IsletmeResimi,
+                ExistingImagePath1 = memberCard.IsletmeResimi1,
+                ExistingImagePath2 = memberCard.IsletmeResimi2,
+                ExistingImagePath3 = memberCard.IsletmeResimi3,
+                ExistingImagePath4 = memberCard.IsletmeResimi4,
+                ExistingImagePath5 = memberCard.IsletmeResimi5,
+                ExistingImagePath6 = memberCard.IsletmeResimi6
+
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> StandartUyeUpdate(UpdateIsletmeForm p)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingIsletme = _ısletmelerService.TGetByID(p.IsletmeID);
+
+                if (existingIsletme == null)
+                {
+                    return NotFound();
+                }
+
+                // Resimleri işle
+                string[] imageFields = { "IsletmeResimi", "IsletmeResimi1", "IsletmeResimi2", "IsletmeResimi3", "IsletmeResimi4", "IsletmeResimi5", "IsletmeResimi6", "IsletmeLogo" };
+                foreach (var field in imageFields)
+                {
+                    var property = typeof(UpdateIsletmeForm).GetProperty(field);
+                    var existingProperty = typeof(Isletmeler).GetProperty(field);
+                    var file = property.GetValue(p) as IFormFile;
+                    var existingFileName = existingProperty.GetValue(existingIsletme) as string;
+
+                    var newFileName = await UpdateImageAsync(file, existingFileName);
+                    existingProperty.SetValue(existingIsletme, newFileName);
+                }
+
+                // Diğer alanları güncelle
+                existingIsletme.IsletmeUyeAdi = p.IsletmeUyeAdi;
+                existingIsletme.IsletmeUyeSoyAdi = p.IsletmeUyeSoyAdi;
+                existingIsletme.IsletmeUyeMail = p.IsletmeUyeMail;
+                existingIsletme.IsletmeTelefonNumarasi = p.IsletmeTelefonNumarasi;
+                existingIsletme.ISletmeAdi = p.ISletmeAdi;
+                existingIsletme.ISletmeTipi = p.IsletmeTipi;
+                existingIsletme.IsletmeInstagram = p.IsletmeInstagram;
+                existingIsletme.IsletmeAcikKonum = p.IsletmeAcikKonum;
+                existingIsletme.ISletmeNot = p.ISletmeNot;
+                existingIsletme.MessageDate = DateTime.Now;
+
+                _ısletmelerService.TUpdate(existingIsletme);
+                return RedirectToAction("Index");
+            }
+            return View(p);
+        }
+
+        private async Task<string> UpdateImageAsync(IFormFile newImage, string existingImagePath)
+        {
+            if (newImage != null)
+            {
+                // Eski dosyayı sil
+                if (!string.IsNullOrEmpty(existingImagePath))
+                {
+                    var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/IsletmelerinResmi/", existingImagePath);
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                // Yeni dosyayı kaydet
+                var extension = Path.GetExtension(newImage.FileName);
+                var newImageName = Guid.NewGuid() + extension;
+                var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/IsletmelerinResmi/", newImageName);
+
+                using (var stream = new FileStream(location, FileMode.Create))
+                {
+                    await newImage.CopyToAsync(stream);
+                }
+
+                return newImageName;
+            }
+
+            return existingImagePath;
+        }
+        
+        [HttpPost]
+        public IActionResult StandOutTrue(int id)
+        {
+            _ısletmelerService.ConvertStandOutTrue(id);
+            return RedirectToAction("ApprovedBusinesses");
+        }
+
+        [HttpPost]
+        public IActionResult StandOutFalse(int id)
+        {
+            _ısletmelerService.ConvertStandOutFalse(id);
+            return RedirectToAction("ApprovedBusinesses");
+        }
+
+    }
+}

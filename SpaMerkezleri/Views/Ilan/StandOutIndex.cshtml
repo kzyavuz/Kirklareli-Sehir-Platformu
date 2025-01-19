@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Ilanlar>
+@{
+    ViewData["Title"] = "StandOutIndex";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<link href="~/css/blog.css" rel="stylesheet" />
+
+<div class="p-4 m-3" style="background: linear-gradient(to right, #738c00 0%, #283606 100%);">
+    <h5 style="background: linear-gradient(to right, #ffffff 0%, #eeeeee 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: center; color: white;">
+        EN ÇOK İLGİ GÖREN TÜM İLANLAR (@ViewBag.TotalIlan TANE)
+    </h5>
+</div>
+@*Post preview*@
+<div class="p-4 table-responsive" style="min-height:60vh;">
+    <table class="table table-striped">
+        <tr>
+            <th>İlan Baslığı</th>
+            <th>İlan Tipi</th>
+            <th>İlan Fotoğrafı</th>
+            <th>İşletme Adı</th>
+            <th style="text-align:end">Yayınlanma Tarihi</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr class="tableTD" onclick="window.location.href='@Url.Action("Details", "Ilan", new { id = item.IlanID })'">
+                <td>@item.IlanBasligi</td>
+                <td>@item.IlanCesidi</td>
+                <td><img src="~/IlanImage/@item.ImagePath" style="height:70px; object-fit:contain;" /></td>
+                <td>@item.IlanYeri</td>
+                <td style="text-align:end">@item.ilanDate.ToString("dd MMMM yyyy HH:mm")</td>
+            </tr>
+        }
+    </table>
+</div>
+<div style="text-align:center;">
+    <a href="/Default/Index" class="btn btn-dark font-weight-bold mt-3 text-black mb-4">
+        Ana Sayfaya Dön
+    </a>
+</div>

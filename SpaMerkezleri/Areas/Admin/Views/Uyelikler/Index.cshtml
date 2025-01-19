@@ -1,0 +1,45 @@
+﻿
+@model IEnumerable<Uyelikler>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Uyelik Kartları</h1>
+<form class="mb-4" asp-controller="Uyelikler" asp-action="AddUyelik" method="get">
+    <button type="submit" class="btn btn-success">Üyelik Kartı Ekle</button>
+</form>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Uyelik Çesidi</th>
+                <th>Fiyat</th>
+                <th>Özlellikler</th>
+                <th>Sil</th>
+                <th>Güncelle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="word-break: break-word;">@item.UyelikTipi </td>
+                    <td style="word-break: keep-all;">@item.YillikUyelik</td>
+                    <td style="word-break: keep-all;">@item.Ozellikler</td>
+                    <td>
+                        <form class="" asp-controller="Uyelikler" asp-action="DeleteUyelik" asp-route-id="@item.UyelikID" method="post" onsubmit="return confirm('İlanı silmek iştediğinize Eminmisiniz')">
+                            <button type="submit" class="btn btn-danger">Kartı Sil</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form class="" asp-controller="Uyelikler" asp-action="UpdateUyelik" asp-route-id="@item.UyelikID" method="get">
+                            <button type="submit" class="btn btn-warning">Kartı Güncelle</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

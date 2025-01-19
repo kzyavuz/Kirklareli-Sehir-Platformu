@@ -1,0 +1,21 @@
+﻿@model CityDistrict
+@{
+    ViewData["Title"] = "UpdateCityDistrict";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>İlçe Güncelleme Sayfası</h1>
+
+@await Html.PartialAsync("~/Areas/Admin/Views/PartialView/BackButton.cshtml")
+
+<form method="post">
+    <input type="hidden" asp-for="ID" />
+
+    <div class="form-group mb-3">
+        <label>İlan Tipi</label>
+        <input type="text" asp-for="Name" class="form-control" />
+    </div>
+
+    <button class="btn btn-outline-warning mb-5">Güncelle</button>
+</form>
+

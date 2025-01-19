@@ -1,0 +1,36 @@
+﻿
+@model List<AppUser>
+@{
+    ViewData["Title"] = "AdminList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Yöneticiyi Listele</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <td>Kullanıcı Ad</td>
+        <td>Rol Ad</td>
+        <td>Sil</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        if (item.UserName == "kozlow")
+        {
+
+        }
+        else
+        {
+            <tr>
+                <td>@item.UserName</td>
+                <td><a href="/Admin/Rol/AssignRole/@item.Id" class="btn btn-warning">Rol Ata</a></td>
+                <td>
+                    <form class="" asp-controller="Rol" asp-action="DeleteUser" asp-area="admin" asp-route-id="@item.Id" onsubmit="return confirm('Kullanıcıyı silmek iştediğinize eminmisiniz')">
+                        <button type="submit" class="btn btn-danger">Kullanıcıyı Sil</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    }
+</table>
+<a href="/AdminLogin/SignUp/" class="btn btn-primary">Yeni Kullanıcı Olustur</a>

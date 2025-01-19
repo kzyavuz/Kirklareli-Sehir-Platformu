@@ -1,0 +1,103 @@
+﻿@model AboutMe
+
+@{
+    ViewData["Title"] = "UpdateAbout";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    img {
+        height: 100px;
+        display: block;
+        border: 1px solid #ddd;
+    }
+</style>
+<h1>Hakkımızda Alanı Güncelleme</h1>
+
+@await Html.PartialAsync("~/Areas/Admin/Views/PartialView/BackButton.cshtml")
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="AboutID" />
+    <div class="form-group">
+        <label class="form-label">Header Başlığı</label>
+        <input type="text" asp-for="AboutName" class="form-control" required />
+    </div>
+    <br />
+    <div class="form-group">
+        <label class="form-label">Telefon Numarası</label>
+        <input type="text" asp-for="AboutTelefon" placeholder="90 (5**) *** ** **" class="form-control" />
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label class="form-label">Taxi Sayfası Linki</label>
+        <input type="text" asp-for="TaxiLink" class="form-control" />
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label class="form-label">Instagram Adresi</label>
+        <input type="text" asp-for="instagram" class="form-control" />
+    </div>
+    <br />
+
+    <!-- Giriş Sayfası Fotoğrafı Güncelle -->
+    <div class="form-group">
+        <label class="form-label">Giriş Sayfası Fotoğrafı</label>
+        <img id="imagePreview1" src="@(!string.IsNullOrEmpty(Model.AboutImg) ? Model.AboutImg : "#")" alt="Giriş Fotoğraf Önizlemesi" />
+        <input type="file" id="aboutImg" name="aboutImg" class="form-control" accept="image/*" onchange="previewImage(event, 'imagePreview1')" />
+    </div>
+    <br />
+
+    <!-- Logo Fotoğrafı Güncelle -->
+    <div class="form-group">
+        <label class="form-label">Logo Fotoğrafı</label>
+        <img id="imagePreview2" src="@(!string.IsNullOrEmpty(Model.LogoImg) ? Model.LogoImg : "#")" alt="Logo Fotoğraf Önizlemesi" />
+        <input type="file" id="logoImg" name="logoImg" class="form-control" accept="image/*" onchange="previewImage(event, 'imagePreview2')" />
+    </div>
+    <br />
+
+    <!-- Şehrin Yıldızlarının Fotoğrafını Güncelle -->
+    <div class="form-group">
+        <label class="form-label">Şehrin Yıldızları Sayfası Fotoğrafı</label>
+        <img id="imagePreview6" src="@(!string.IsNullOrEmpty(Model.AboutCityStartImg) ? Model.AboutCityStartImg : "#")" alt="Sehrin Yıldızı Fotoğraf Önizlemesi" />
+        <input type="file" id="aboutCityStartImg" name="aboutCityStartImg" class="form-control" accept="image/*" onchange="previewImage(event, 'imagePreview6')" />
+    </div>
+    <br />
+
+    <!-- İlan Sayfası Fotoğrafı Güncelle -->
+    <div class="form-group">
+        <label class="form-label">İlan Sayfası Fotoğrafı</label>
+        <img id="imagePreview3" src="@(!string.IsNullOrEmpty(Model.AboutIlanImg) ? Model.AboutIlanImg : "#")" alt="İlan Fotoğraf Önizlemesi" />
+        <input type="file" id="aboutIlanImg" name="aboutIlanImg" class="form-control" accept="image/*" onchange="previewImage(event, 'imagePreview3')" />
+    </div>
+    <br />
+
+    <!-- Blog Sayfası Fotoğrafı Güncelle -->
+    <div class="form-group">
+        <label class="form-label">Blog Sayfası Fotoğrafı</label>
+        <img id="imagePreview4" src="@(!string.IsNullOrEmpty(Model.AboutBlogImg) ? Model.AboutBlogImg : "#")" alt="Blog Fotoğraf Önizlemesi" />
+        <input type="file" id="aboutBlogImg" name="aboutBlogImg" class="form-control" accept="image/*" onchange="previewImage(event, 'imagePreview4')" />
+    </div>
+    <br />
+
+    <!-- Sektör Sayfası Fotoğrafı Güncelle -->
+    <div class="form-group">
+        <label class="form-label">Sektör Sayfası Fotoğrafı</label>
+        <img id="imagePreview5" src="@(!string.IsNullOrEmpty(Model.AboutSektorImg) ? Model.AboutSektorImg : "#")" alt="Sektör Fotoğraf Önizlemesi" />
+        <input type="file" id="aboutSektorImg" name="aboutSektorImg" class="form-control" accept="image/*" onchange="previewImage(event, 'imagePreview5')" />
+    </div>
+    <br />
+
+    <button class="btn btn-outline-warning">Güncelle</button>
+</form>
+
+<script>
+    function previewImage(event, previewId) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById(previewId);
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>

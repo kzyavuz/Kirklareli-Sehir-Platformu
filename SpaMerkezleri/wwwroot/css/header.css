@@ -1,0 +1,23 @@
+﻿
+.col-example a {
+    text-decoration: none;
+}
+
+.col-example h1 {
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    font-size: 2em; /* Varsayılan font boyutu */
+}
+
+@media (max-width: 768px) {
+    .col-example h1 {
+        font-size: 1.5em; /* Orta boyutlu cihazlar için font boyutu */
+    }
+}
+
+@media (max-width: 480px) {
+    .col-example h1 {
+        font-size: 1.5em; /* Küçük boyutlu cihazlar için font boyutu */
+    }
+}

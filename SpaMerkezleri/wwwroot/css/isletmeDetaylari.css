@@ -1,0 +1,64 @@
+﻿
+.banner {
+    position: relative;
+}
+
+    .banner img {
+        width: 100%;
+        height: auto; /* Resmin orantılı bir şekilde yeniden boyutlandırılması için */
+        max-height: 700px; /* Maksimum yüksekliği ayarlayın, böylece büyük ekranlarda çok büyük olmaz */
+        object-fit: cover; /* Resmin konteynırını tamamen kaplamasını sağlar */
+    }
+
+
+
+    .banner h2 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        font-size: 2em;
+        border: 2px solid white;
+        padding: 10px;
+        text-align: center;
+    }
+
+@media (max-width: 768px) {
+    .banner h2 {
+        font-size: 1.5em; /* Küçük ekranlar için daha küçük font boyutu */
+    }
+}
+
+@media (max-width: 576px) {
+    .banner h2 {
+        font-size: 1.2em; /* Daha küçük ekranlar için daha küçük font boyutu */
+    }
+}
+
+.thumb {
+    margin-bottom: 30px;
+}
+
+.page-top {
+    margin-top: 85px;
+}
+
+
+img.zoom {
+    width: 100%;
+    height: 200px;
+    border-radius: 5px;
+    object-fit: cover;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+}
+
+.transition {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform: scale(1.2);
+}

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<CityStart>
+
+
+<div class="p-4 m-3" style="background: linear-gradient(to right, #738c00 0%, #283606 100%);">
+    <h5 style="background: linear-gradient(to right, #ffffff 0%, #eeeeee 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: center; color: white;">
+        ŞEHRİN YILDIZLARI
+    </h5>
+</div>
+
+<div class="mb-3">
+    <img class="mx-auto d-block" src="~/site/start.png" style="width: 150px; object-fit:cover; height:90px;" />
+    <div class="row mx-2 justify-content-center">
+        @foreach (var item in Model)
+        {
+            <div class="px-3 col-6 col-sm-6 col-md-4 col-lg-2 mb-3">
+                <div style="box-shadow: 0px 0px 10px 3px #615959;">
+                    <a href="/CityStart/Post/@item.Id" style="text-decoration: none; color: black;">
+                        <img style="width: 100%;" src="~/images/CityStart/@item.ImagePath" />
+                        <h6 style="height: 50px;" class="post-title p-2 text-center">@item.Title</h6>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<a href="/CityStart/Index" class="btn bg-dark d-table mx-auto mb-3 p-3" style="color: #eeeeee; border-radius: 15px; border-color: #212529; box-shadow: 0px 0px 20px 0px;">
+    TÜMÜNÜ GÖRMEK İÇİN TIKLAYINIZ
+</a>

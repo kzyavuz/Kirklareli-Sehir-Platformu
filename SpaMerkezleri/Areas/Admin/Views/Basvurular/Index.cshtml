@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Isletmeler>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Onay Bekleyen İşletme Başvuruları</h1>
+<a href="/Admin/Basvurular/ApprovedBusinesses" class="btn btn-success mb-3 mx-3">Onaylanan İşletmeler</a>
+<a href="/Admin/Basvurular/RejectedBusinesses" class="btn btn-danger mb-3 mx-3">Reddedilen İşletmeler</a>
+<p>@ViewBag.TotalIlan Tane İlan Mevcut</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Sayfayı gör</th>
+                <th>Ad Soyad</th>
+                <th>İşletme Adı</th>
+                <th>İşletme Tipi</th>
+                <th>Telefon</th>
+                <th>Uye Adı Soyadı</th>
+                <th>İşletme Logo</th>
+                <th>İşletme Fotoğraf</th>
+                <th>İşletme Onayı</th>
+                <th>Sil</th>
+                <th>Güncelle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><a href="/ISletmeleriListele/IsletmeDetayları/@item.IsletmeID" class="btn btn-primary">Git</a></td>
+                    <td style="word-break: keep-all;">@item.IsletmeUyeAdi @item.IsletmeUyeSoyAdi</td>
+                    <td style="word-break: keep-all;">@item.ISletmeAdi</td>
+                    <td style="word-break: keep-all;">@item.ISletmeTipi</td>
+                    <td style="word-break: keep-all;">@item.IsletmeTelefonNumarasi</td>
+                    <td style="word-break: keep-all;">@item.AppUser.UserName</td>
+                    <td><img style="height:80px; width:80px; border-radius:50%;" ; src="~/IsletmelerinResmi/@item.IsletmeLogo" /></td>
+                    <td><img style="height:80px; width:80px" ; src="~/IsletmelerinResmi/@item.IsletmeResimi" /></td>
+
+                    <td>
+                        <form class="" asp-controller="Basvurular" asp-action="ConvertTrue" asp-route-id="@item.IsletmeID" method="post" onsubmit="return confirm('İşletmeyi onaylamak iştediğinize eminmisiniz')">
+                            <input type="hidden" name="returnUrl" value="Index" />
+                            <button type="submit" class="btn btn-success">✓</button>
+                        </form>
+
+                        <form class="" asp-controller="Basvurular" asp-action="ConvertFalse" asp-route-id="@item.IsletmeID" method="post" onsubmit="return confirm('İşletmeyi reddetmek iştediğinize Eminmisiniz')">
+                            <input type="hidden" name="returnUrl" value="Index" />
+                            <button type="submit" class="btn btn-danger text-white">X</button>
+                        </form>
+                    </td>
+
+                    <td>
+                        <form class="" asp-controller="Basvurular" asp-action="Delete" asp-route-id="@item.IsletmeID" method="post" onsubmit="return confirm('İşletme kaydınızı silmek iştediğinize Eminmisiniz')">
+                            <input type="hidden" name="returnUrl" value="Index" />
+                            <button type="submit" class="btn btn-danger">Sil</button>
+                        </form>
+                    </td>
+                    <td><a href="@Url.Action("StandartUyeUpdate", "Basvurular", new { id = item.IsletmeID })" class="btn btn-outline-warning">Güncelle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

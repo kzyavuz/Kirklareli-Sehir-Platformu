@@ -1,0 +1,16 @@
+﻿.btnimg {
+    width: 200px;
+}
+
+
+@media (max-width: 900px) {
+    .btnimg {
+        width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .btnimg {
+        width: 110px;
+    }
+}

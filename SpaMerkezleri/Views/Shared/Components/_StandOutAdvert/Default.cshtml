@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Ilanlar>
+
+<div class="p-4 m-3" style="background: linear-gradient(to right, #738c00 0%, #283606 100%);">
+    <h5 style="background: linear-gradient(to right, #ffffff 0%, #eeeeee 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: center; color: white;">
+        EN ÇOK İLGİ GÖREN İLANLAR
+    </h5>
+</div>
+
+<div class="row mx-2 justify-content-center">
+    @foreach (var item in Model)
+    {
+        <div class="px-3 col-lg-3 col-md-4 col-sm-12 mb-3">
+            <div class="post-preview" style="min-height: 430px; box-shadow: 0px 0px 10px 3px #615959;">
+                <a href="/Ilan/Details/@item.IlanID" style="text-decoration:none; color: black;">
+                    <div class="col-12 pt-3 pb-2">
+                        <h4 class="post-title text-center m-0">
+                            @(string.IsNullOrEmpty(item.IlanBasligi) ? string.Empty : item.IlanBasligi.ToUpper())
+                        </h4>
+                    </div>
+                    <div class="px-4">
+                        <img src="/IlanImage/@item.ImagePath" class="img-fluid mx-auto d-block" style="height: 200px; object-fit: cover;" />
+                    </div>
+                    <h5 class="post-subtitle mt-3 text-center">@item.IlanYeri.ToUpper()</h5>
+                    <p class="text-center mb-1">@item.IlanCesidi</p>
+                    <div class="col-lg-12 px-3">
+                        <hr class="my-2" />
+                        @if (!string.IsNullOrEmpty(item.İlanAcikklamasi) && item.İlanAcikklamasi.Length > 100)
+                        {
+                            @Html.Raw(item.İlanAcikklamasi.Substring(0, 100) + "...")
+                        }
+                        else
+                        {
+                            @Html.Raw(item.İlanAcikklamasi)
+                        }
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+<a href="/Ilan/StandOutIndex" class="btn bg-dark d-table mx-auto mb-3 p-3 " style="color: #eeeeee; border-radius: 15px; border-color: #212529; box-shadow: 0px 0px 20px 0px; ">
+    TÜMÜNÜ GÖRMEK İÇİN TIKLAYINIZ
+</a>

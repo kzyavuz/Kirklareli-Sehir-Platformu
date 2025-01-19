@@ -1,0 +1,71 @@
+﻿
+@model IEnumerable<Pharmacy>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<link rel="stylesheet" href="/css/Pharmacy.css">
+
+<div class="container">
+    <div class="header">
+        <div class="header-logo">
+            <img src="~/site/epano.gif" alt="Logo" />
+        </div>
+        <h2>Kırklareli Nöbetçi Eczaneler</h2>
+        <h2>@ViewBag.DateTime</h2>
+        <form method="get" action="@Url.Action("Index", "Pharmacy")">
+            <div class="mb-3">
+                <label for="districtFilter" class="form-label">İlçeye Göre Filtrele</label>
+                <select class="form-select" id="districtFilter" name="district" onchange="this.form.submit()">
+                    <option value="">Tüm İlçeler</option>
+                    @foreach (var district in ViewBag.Districts)
+                    {
+                        var selectedDistrict = ViewContext.HttpContext.Request.Query["district"].ToString();
+                        if (district == selectedDistrict)
+                        {
+                            <option value="@district" selected>@district</option>
+                        }
+                        else
+                        {
+                            <option value="@district">@district</option>
+                        }
+                    }
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <div class="pharmacy-list">
+        @foreach (var pharmacy in Model)
+        {
+            <div class="pharmacy-card">
+                <div class="pharmacy-logo">
+                    <img src="~/site/epano.gif" alt="Eczane Logo" />
+                </div>
+                <div class="pharmacy-info">
+                    <h3>@pharmacy.PharmacyName</h3>
+                    <hr />
+                    <p class="city">🏙️ @pharmacy.District</p>
+                    <hr />
+                    <p class="address">🚩 @pharmacy.StreetAddress</p>
+                    <hr />
+                    <p class="phone">
+                        <a href="tel:@pharmacy.PhoneNumber" class="text-decoration-none text-dark" target="_blank">
+                            📱 @string.Format("+90 ({0}) {1} {2} {3}",
+                         pharmacy.PhoneNumber.Substring(0, 3),
+                         pharmacy.PhoneNumber.Substring(3, 3),
+                         pharmacy.PhoneNumber.Substring(6, 2),
+                         pharmacy.PhoneNumber.Substring(8, 2))
+                        </a>
+                    </p>
+                    <hr />
+                    <a class="text-decoration-none text-dark" href="@pharmacy.GoogleLocal" target="_blank">🗺️ Haritada Göster</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

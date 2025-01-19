@@ -1,0 +1,35 @@
+﻿@model IEnumerable<SektorCategory>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int sayac = 1;
+}
+
+
+<h1>Şehirde Dinamikleri</h1>
+<a class="btn btn-success mb-3" href="/Admin/SektorCategory/AddSektorCategory">Kategori Ekle</a>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <th>#</th>
+            <th>Kategori Adı</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@sayac</td>
+                <td>@item.CategoryName</td>
+                <td><a class="btn btn-warning" href="/Admin/SektorCategory/UpdateSektorCategory/@item.ID">Güncelle</a></td>
+                <td>
+                    <form asp-controller="SektorCategory" asp-action="DeleteSektorCategory" asp-route-id="@item.ID" onsubmit="return confirm('Kategoriyi silmek iştediğinize eminmisiniz')">
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                    </form>
+                </td>
+            </tr>
+            sayac++;
+        }
+    </table>
+</div>

@@ -1,0 +1,63 @@
+﻿
+@model IEnumerable<Ilanlar>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/MemberLayout.cshtml";
+}
+
+<a class="btn btn-success mb-4 mx-4" asp-controller="Ilan" asp-action="AddIlan">İlan Ver</a>
+<a href="/Ilan/Index/" class="btn btn-primary mb-4">Sayfaya Git</a>
+<p>@ViewBag.TotalIlan Tane İlan onaylandı.</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>İlan Tarihi</th>
+                <th>İlan Tipi</th>
+                <th>İşletme</th>
+                <th>Telefon</th>
+                <th>İlan Resimi</th>
+                <th>Onay Durumu</th>
+                <th>Sil</th>
+                <th>Güncelle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td style="word-break: keep-all;">@item.ilanDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"))</td>
+                <td style="word-break: break-word;">@item.IlanCesidi </td>
+                <td style="word-break: keep-all;">@item.IlanYeri</td>
+                <td style="word-break: keep-all;">@item.İlanTelefonNo</td>
+                <td style="word-break: keep-all;"><img src="~/IlanImage/@item.ImagePath" style="width:100px; object-fit:contain;" /></td>
+                @if (item.Status == "Onay Bekliyor")
+                {
+                    <td style="word-break: keep-all;" class="text-warning">@item.Status</td>
+                }
+                @if (item.Status == "Onaylandı")
+                {
+                    <td style="word-break: keep-all;" class="text-success">@item.Status</td>
+                }@if (item.Status == "Reddedildi")
+                {
+                    <td style="word-break: keep-all;" class="text-danger">@item.Status</td>
+                }
+                <td>
+                    <form class="" asp-controller="Ilan" asp-action="DeleteIlan" asp-route-id="@item.IlanID" method="post" onsubmit="return confirm('İlanı silmek iştediğinize Eminmisiniz')">
+                        <button type="submit" class="btn btn-danger">İlanı Sil</button>
+                    </form>
+                </td>
+                <td>
+                    <form class="" asp-controller="Ilan" asp-action="UpdateIlan" asp-route-id="@item.IlanID" method="get">
+                        <button type="submit" class="btn btn-warning">İlanı Güncelle</button>
+                    </form>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

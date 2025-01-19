@@ -1,0 +1,49 @@
+﻿@model List<AboutMe>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Hakkımızda Bilgileri</h1>
+@if (Model.Count < 1)
+{
+    <a href="/Admin/About/AddAbout/" class="btn btn-success mb-3">Hakkımda Bilgisi Ekle</a>
+}
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Baslık</th>
+            <th>Telefon Numarası</th>
+            <th>Taxi Linki</th>
+            <th>İnstagram Adı</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+
+        @{ var i = 1; }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@i</td>
+                <td style="word-break: break-all;">@item.AboutName</td>
+                <td style="word-break: break-all;">@item.AboutTelefon</td>
+                <td style="word-break: break-all;">@item.TaxiLink</td>
+                <td style="word-break: break-all;">@item.instagram</td>
+                <td><a href="/Admin/About/UpdateAbout/@item.AboutID" class="btn btn-outline-warning">Güncelle</a></td>
+                <td>
+                    <form asp-controller="About" asp-action="DeleteAbout" asp-route-id="@item.AboutID" onsubmit="return confirm('Hakkımda bilgidini silmek iştediğinize eminmisiniz')">
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                    </form>
+                </td>
+            </tr>
+            i++;
+        }
+    </table>
+</div>
+@if (Model.Count > 1)
+{
+    <h1 style="color:red;">BU ALANDA YALNIZCA 1 TANE SATIR OLABİLİR. ESKİ VERİYİ SİLİN !!!</h1>
+
+}

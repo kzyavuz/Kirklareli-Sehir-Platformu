@@ -1,0 +1,45 @@
+﻿
+/* Kapsayıcı stil */
+.background-container {
+    background-image: url('/Slider/luleburgaz.jpg');
+    background-size: cover; /* Arka planın kapsayıcıya uygun şekilde ayarlanmasını sağlar */
+    background-position: center; /* Arka planın merkezlenmesini sağlar */
+    position: relative;
+    height: 700px; /* Varsayılan yükseklik */
+}
+
+/* Logo stili */
+.logo {
+    position: absolute;
+    border-radius:50%;
+    bottom: -92px; /* Logo yüksekliğini belirler */
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 180px; /* Logo genişliğinin kapsayıcıdan taşmamasını sağlar */
+    height: auto; /* Yüksekliği genişliğe göre ayarlar */
+    object-fit: contain; /* Logo içeriği kapsayıcıya sığacak şekilde uyum sağlar */
+}
+
+/* Responsive ayarlar */
+@media (max-width: 500px) {
+    .background-container {
+        height: 400px; /* Küçük ekranlar için daha küçük yükseklik */
+    }
+
+    .logo {
+        max-width: 120px; /* Küçük ekranlar için daha küçük logo genişliği */
+        height: auto; /* Logo oranını korur */
+        bottom: -60px; /* Logo yüksekliğini belirler */
+    }
+
+    .select-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .select-container select,
+        .select-container button {
+            width: 100%; /* Küçük ekranlar için tam genişlik */
+            margin-bottom: 10px;
+        }
+}

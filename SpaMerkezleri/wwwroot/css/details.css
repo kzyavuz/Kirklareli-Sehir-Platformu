@@ -1,0 +1,72 @@
+﻿/* İlan Detayları Sayfası Stil Düzenlemeleri */
+
+.card {
+    border: none;
+    margin-bottom: 20px;
+}
+
+    .card h3, .card h4 {
+        margin-bottom: 20px;
+    }
+
+    .card p {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+.img-fluid {
+    border-radius: 8px;
+}
+
+.list-group-item {
+    border: none;
+    padding: 10px 0;
+}
+
+    .list-group-item span {
+        font-size: 16px;
+    }
+
+.btn-lg {
+    padding: 15px;
+    font-size: 18px;
+}
+
+.btn-primary {
+    background-color: #ffcc00;
+    border-color: #ffcc00;
+    color: #333;
+}
+
+    .btn-primary:hover {
+        background-color: #e6b800;
+        border-color: #e6b800;
+        color: #333;
+    }
+
+.btn-outline-primary {
+    border-color: #ffcc00;
+    color: #ffcc00;
+}
+
+    .btn-outline-primary:hover {
+        background-color: #ffcc00;
+        color: #333;
+    }
+
+.btn-secondary {
+    background-color: #f0f0f0;
+    border: none;
+    color: #333;
+}
+
+    .btn-secondary:hover {
+        background-color: #e0e0e0;
+    }
+
+@media (max-width: 767px) {
+    .btn-lg {
+        font-size: 16px;
+        padding: 10px;
+    }
+}

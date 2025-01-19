@@ -1,0 +1,57 @@
+﻿@model IEnumerable<AboutMe>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<link href="~/css/ilan.css" rel="stylesheet" />
+
+<section>
+    <div class="mb-3 pt-5 background-container" style="background-image: url('@ViewBag.Img');">
+
+        <div class="row w-100 mx-auto d-flex justify-content-center mt-5 select-container">
+            <div class="col-md-6 col-lg-6 col-sm-11 col-11">
+                <select class="mb-md-5 mb-4" id="isletmeTipi">
+                    <option value="">İşletme Kategorisi</option>
+                    @foreach (var cesit in ViewBag.IsletmeTipleri)
+                    {
+                        <option value="@cesit">@cesit</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4 col-lg-4 col-sm-11 col-11">
+                <button onclick="listele()" class="col-12 btn btn-light mx-auto p-3">
+                    <b>🔎Ara</b>
+                </button>
+            </div>
+        </div>
+
+
+        <img src="@ViewBag.Logo" class="logo" />
+    </div>
+
+    <div class="justify-content-between d-flex mx-md-5 px-3">
+        <div class="justify-content-center">
+            @await Html.PartialAsync("/Views/PartialView/PharmacyButton.cshtml")
+        </div>
+        <div class="justify-content-center">
+            @await Component.InvokeAsync("_TaxiButton")
+        </div>
+    </div>
+
+    @await Component.InvokeAsync("_Linkler")
+    @await Component.InvokeAsync("_HomeCityStart")
+    @await Component.InvokeAsync("_StandOutBusiness")
+    @await Component.InvokeAsync("_StandOutAdvert")
+    @await Component.InvokeAsync("_HomeBlog")
+    @await Component.InvokeAsync("_HomeSektor")
+</section>
+
+<script>
+    function listele() {
+        const isletmeTipi = document.getElementById('isletmeTipi').value;
+        const encodedIsletmeTipi = encodeURIComponent(isletmeTipi);  // İşletme tipini güvenli hale getiriyoruz.
+        window.location.href = "/ISletmeleriListele/Index?isletmeTipi=" + encodedIsletmeTipi;
+    }
+</script>

@@ -1,0 +1,45 @@
+﻿@model SpaMerkezleri.Models.UserSignIn
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/css/login.css" rel="stylesheet" />
+    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <title>Kullanıcı Giriş Sayafası</title>
+</head>
+<body>
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <!-- Icon -->
+            <div class="fadeIn first mt-3">
+                <img src="/site/login.png" id="icon" alt="User Icon" class="my-3"/>
+            </div>
+
+            <form method="post">
+                <input type="text" id="login" class="fadeIn second" asp-for="userName" placeholder="Kullanıcı Adı" required>
+                <input type="password" id="password" class="fadeIn third" asp-for="userPassword" placeholder="Sifre" required>
+                <input type="submit" class="fadeIn fourth my-3" value="Giriş Yap">
+                @*<div class="text-center mb-4 mt-2">
+                    <a href="/Member/MemberLogin/MSignUp/" style="color: #56baed; text-align:center; font-weight:bold; text-decoration:none;">→ Kayıt Ol</a>
+                </div>*@
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </form>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</body>
+</html>

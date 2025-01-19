@@ -1,0 +1,43 @@
+﻿@model Pharmacy
+@{
+    ViewData["Title"] = "AddPharmacy";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Nöbetçi Eczane Ekleme Sayfası</h1>
+
+@await Html.PartialAsync("~/Areas/Admin/Views/PartialView/BackButton.cshtml")
+
+<form method="post">
+    <div class="form-group mb-3">
+        <label>Eczane Adı</label>
+        <input type="text" asp-for="PharmacyName" class="form-control" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Telefon Numarası</label>
+        <input type="tel" asp-for="PhoneNumber" maxlength="10" placeholder="10 haneli olarak" class="form-control" pattern="[0-9]{10}" required />
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Açık Konum</label>
+        <textarea rows="4" asp-for="StreetAddress" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Harita Konumu</label>
+        <textarea rows="4" asp-for="GoogleLocal" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label">İlçe</label>
+        <select class="form-control select2" asp-for="District" required>
+            <option>Seçiniz</option>
+            @foreach (var item in ViewBag.District)
+            {
+                <option value="@item.Name">@item.Name</option>
+            }
+        </select>
+    </div>
+    <button class="btn btn-outline-success mb-5">Ekle</button>
+</form>

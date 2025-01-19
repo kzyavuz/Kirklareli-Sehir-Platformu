@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Ilanlar>
+
+@{
+    ViewData["Title"] = "RejectedListIlan";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Reddedilen İlan Listeleri</h1>
+
+@await Html.PartialAsync("~/Areas/Admin/Views/PartialView/BackButton.cshtml")
+
+<p>@ViewBag.TotalIlan Tane Reddedilen İlan Mevcut</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>İlan Resimi</th>
+                <th>İlan Tarihi</th>
+                <th>İlan Tipi</th>
+                <th>İşletme</th>
+                <th>Telefon</th>
+                <th>Onayla</th>
+                <th>Sil</th>
+                <th>Güncelle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="word-break: keep-all;"><img src="~/IlanImage/@item.ImagePath" style="width:100px; object-fit:contain;" /></td>
+                    <td style="word-break: keep-all;">@item.ilanDate.ToString("dd MMMM yyyy HH:ss", new System.Globalization.CultureInfo("tr-TR"))</td>
+                    <td style="word-break: break-word;">@item.IlanCesidi </td>
+                    <td style="word-break: keep-all;">@item.IlanYeri</td>
+                    <td style="word-break: keep-all;">@item.İlanTelefonNo</td>
+
+                    <td>
+                        <form class="" asp-controller="Ilan" asp-action="ConvertToTrue" asp-route-id="@item.IlanID" method="post" onsubmit="return confirm('İlanı onaylamak iştediğinize eminmisiniz')">
+                            <input type="hidden" name="returnUrl" value="RejectedListIlan" />
+                            <button type="submit" class="btn btn-success">✓</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form class="" asp-controller="Ilan" asp-action="DeleteIlan" asp-route-id="@item.IlanID" method="post" onsubmit="return confirm('İlanı silmek iştediğinize Eminmisiniz')">
+                            <input type="hidden" name="returnUrl" value="RejectedListIlan" />
+                            <button type="submit" class="btn btn-danger">Sil</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form class="" asp-controller="Ilan" asp-action="UpdateIlan" asp-route-id="@item.IlanID" method="get">
+                            <button type="submit" class="btn btn-warning">Güncelle</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+

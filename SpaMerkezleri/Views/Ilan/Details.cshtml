@@ -1,0 +1,67 @@
+﻿@model Ilanlar
+@{
+    ViewData["Title"] = "İlan Detayları";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<link href="~/css/details.css" rel="stylesheet" />
+
+<div class="container my-4">
+    <div class="row">
+        <!-- Sol Panel: Görseller ve Temel Bilgiler -->
+        <div class="col-md-8">
+            <div class="card p-4 shadow-sm mb-4">
+                <!-- İlan Görseli -->
+                <img src="~/IlanImage/@Model.ImagePath" class="img-fluid rounded mb-4" alt="İlan Fotoğrafı" />
+
+                <!-- Temel Bilgiler -->
+                <h3 class="text-info">@Model.IlanBasligi.ToUpper()</h3>
+                <p><strong>İşletme Adı:</strong> @Model.IlanYeri</p>
+                <p><strong>Yayınlanma Tarihi:</strong> @Model.ilanDate.ToString("dd MMMM yyyy HH:mm")</p>
+                <p><strong>Konum:</strong> @Model.İlanKonumu</p>
+            </div>
+
+            <!-- İlan Açıklaması -->
+            <div class="col-md-12">
+                <div class="card p-4 shadow-sm mb-4">
+                    <h4 class="mb-3">İlan Detayları</h4>
+                    @Html.Raw(Model.İlanAcikklamasi)
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sağ Panel: İletişim ve İlan Bilgileri -->
+        <div class="col-md-4">
+            <div class="card p-4 shadow-sm mb-4">
+                <h4>İlan Bilgileri</h4>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><strong>İlan No:</strong></span>
+                        <span>@Model.IlanID</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><strong>İlan Tarihi:</strong></span>
+                        <span>@Model.ilanDate.ToString("dd MMMM yyyy HH:mm")</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><strong>İlan Çesidi:</strong></span>
+                        <span>@Model.IlanCesidi</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card p-4 shadow-sm mb-4 text-center">
+                <h4>İletişim Bilgileri</h4>
+                <p><strong>Ad Soyad:</strong> @Model.AppUser.name</p>
+                <p><strong>Telefon:</strong> @Model.İlanTelefonNo</p>
+                <p><strong>Email:</strong> @Model.AppUser.Email</p>
+                <a href="tel:@Model.İlanTelefonNo" class="btn btn-info btn-lg font-weight-bold w-100 mb-2">Telefonla Ara</a>
+                <a href="mailto:@Model.AppUser.Email" class="btn btn-outline-info font-weight-bold btn-lg w-100">E-Posta Gönder</a>
+            </div>
+
+            <a href="@Url.Action("Index", "Ilan")" class="btn btn-secondary w-100">İlanlara Geri Dön</a>
+        </div>
+    </div>
+</div>
+

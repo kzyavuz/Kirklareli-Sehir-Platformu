@@ -1,0 +1,71 @@
+﻿@model AddBlogModel
+
+@{
+    ViewData["Title"] = "AddBlog";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <a class="btn btn-warning mb-1" asp-action="Index" asp-controller="CityStart">Geri</a>
+    <div class="card">
+        <div class="card-header" style="background: linear-gradient(to right, #464793 0%, #310444 100%); ">
+            <h4 class="card-title text-white">Şehrin Öne Çıkanı Ekle</h4>
+        </div>
+        <div class="card-body">
+            <!-- Blog ekleme formu -->
+            <form asp-action="AddCityStart" asp-controller="CityStart" asp-area="Admin" enctype="multipart/form-data">
+                <div class="row mb-2">
+                    <!-- Başlık ve Detay İçerik -->
+                    <div class="col-9">
+                        <div class="mb-2">
+                            <label for="Title">Başlık</label>
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                            <input type="text" asp-for="Title" class="form-control" id="Title" required />
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Kategorisi</label>
+                            <select class="form-control select2" asp-for="BlogCategory" required>
+                                <option>Seçiniz</option>
+                                @foreach (var tip in ViewBag.Category)
+                                {
+                                    <option value="@tip">@tip</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="DetailDescription">Detaylı İçerik</label>
+                            <span asp-validation-for="DetailDescription" class="text-danger"></span>
+                            <textarea id="richEditor" asp-for="DetailDescription" class="form-control" rows="8" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Resim Yükleme ve Önizleme -->
+                    <div class="col-3">
+                        <div class="mb-2">
+                            <img src="~/blogImage/default_image.png" class="img-fluid" id="thumbnail" alt="Image Preview" />
+                        </div>
+                        <div class="mb-2">
+                            <label for="Image">Resim Seçin</label>
+                            <input type="file" asp-for="Image" class="form-control custom-file-input" id="Image" required />
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formu Gönderme Butonu -->
+                <div class="mb-2">
+                    <button type="submit" class="btn btn-primary w-100">Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Javascript ve Validasyon Scriptleri -->
+@section Scripts{
+    <!-- Validation Scripts -->
+    <partial name="_ValidationScriptsPartial" />
+
+    <!-- Resim önizleme için Javascript -->
+    <script type="text/javascript" charset="utf-8" src="~/js/myFunction.js"></script>
+}

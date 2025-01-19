@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Isletmeler>
+
+<div class="p-4 m-3" style="background: linear-gradient(to right, #738c00 0%, #283606 100%);">
+    <h5 style="background: linear-gradient(to right, #ffffff 0%, #eeeeee 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: center; color: white;">
+        EN ÇOK İLGİ GÖREN İŞLETMELER
+    </h5>
+</div>
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div class="row d-flex justify-content-center w-100 pt-3 pb-3 ml-0">
+        @foreach (var item in Model)
+        {
+            <div class="card mx-2 mb-3 p-0" style="width: 21rem; box-shadow: 0px 0px 10px 3px #615959;">
+                <img style="height:200px" src="/IsletmelerinResmi/@item.IsletmeResimi" class="card-img-top" alt="@item.ISletmeAdi">
+                <div class="card-body" style="display: grid; position: relative;">
+                    <h5 class="card-title mx-auto">@item.ISletmeAdi</h5>
+                    @if (!string.IsNullOrEmpty(item.ISletmeNot) && item.ISletmeNot.Length > 100)
+                    {
+                        <span class="mb-3">@Html.Raw(item.ISletmeNot.Substring(0, 100) + "...")</span>
+                    }
+                    else
+                    {
+                        <span class="card-text mb-3">@Html.Raw(item.ISletmeNot)</span>
+                    }
+                    <a href="/ISletmeleriListele/IsletmeDetayları/@item.IsletmeID" style="left:6%;" class="btn btn-dark font-weight-bolder abutton">Sayfayı Ziyaret Et</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<a href="/IsletmeleriListele/StandOutIndex" class="btn bg-dark d-table mx-auto mb-3 p-3 " style="color: #eeeeee; border-radius: 15px; border-color: #212529; box-shadow: 0px 0px 20px 0px; ">
+    TÜMÜNÜ GÖRMEK İÇİN TIKLAYINIZ
+</a>

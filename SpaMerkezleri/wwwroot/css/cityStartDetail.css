@@ -1,0 +1,41 @@
+﻿/* Varsayılan (küçük ekranlar için) */
+h5.card-title {
+    font-size: 18px;
+}
+
+p.card-text {
+    font-size: 14px;
+}
+
+/* Tabletler için (min-width: 768px) */
+@media (min-width: 768px) {
+    h5.card-title {
+        font-size: 22px;
+    }
+
+    p.card-text {
+        font-size: 16px;
+    }
+}
+
+/* Laptoplar ve büyük ekranlar için (min-width: 992px) */
+@media (min-width: 992px) {
+    h5.card-title {
+        font-size: 26px;
+    }
+
+    p.card-text {
+        font-size: 18px;
+    }
+}
+
+/* Geniş ekranlar için (min-width: 1200px) */
+@media (min-width: 1200px) {
+    h5.card-title {
+        font-size: 30px;
+    }
+
+    p.card-text {
+        font-size: 20px;
+    }
+}

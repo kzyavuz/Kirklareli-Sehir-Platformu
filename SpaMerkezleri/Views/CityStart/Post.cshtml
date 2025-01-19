@@ -1,0 +1,30 @@
+﻿@model CityStart
+@{
+    ViewData["Title"] = "Post";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<link href="~/css/cityStartDetail.css" rel="stylesheet" />
+
+<div class="row w-100 mx-auto d-flex justify-content-center mb-3">
+    <div class="col-lg-4 col-md-4 col-sm-12 mt-3">
+        <div class="card">
+            <div class="card-body mx-auto">
+                <img class="w-100" style="max-width: 100%; height: auto;" src="~/images/CityStart/@Model.ImagePath" />
+            </div>
+        </div>
+        <p class="post-meta mt-2" style="text-align:end;">
+            Ödül Tarihi: @Model.CreateDateTime.ToString("dd MMMM yyyy")
+        </p>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-center">@Model.Title.ToUpper()</h5>
+                <p class="card-text">@Html.Raw(Model.Content)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+

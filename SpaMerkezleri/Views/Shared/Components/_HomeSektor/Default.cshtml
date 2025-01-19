@@ -1,0 +1,28 @@
+﻿
+@model List<Sektor>
+<div class="p-4 m-3" style="background: linear-gradient(to right, #738c00 0%, #283606 100%);">
+    <h5 style="background: linear-gradient(to right, #ffffff 0%, #eeeeee 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: center; color: white; ">ŞEHİRİN DİNAMİKLERİ</h5>
+</div>
+
+@* Depolar *@
+<div class="row mx-2 justify-content-between">
+    @foreach (var item in Model)
+    {
+        <div class="px-2 mb-3 col-lg-3 col-md-3 col-sm-12 p-0">
+            <div class="card" style="box-shadow: 0px 0px 10px 3px #615959;">
+                <a href="/SektorIcinde/Post/@item.Id">
+                    <img class="card-img-top" style="height:220px;" src="/sektorImage/@item.ImagePath" alt="Card image cap">
+                </a>
+                <div class="card-body p-0" style="height:100px;">
+                    <div style="max-height: 130px; overflow-y: auto;">
+                        <h4 class="card-title text-center p-3">@item.Title</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<a href="/SektorIcinde/Index" class="btn bg-dark d-table mx-auto mb-3 p-3 " style="color: #eeeeee; border-radius: 15px; border-color: #212529; box-shadow: 0px 0px 20px 0px; ">
+    TÜMÜNÜ GÖRMEK İÇİN TIKLAYINIZ
+</a>

@@ -1,0 +1,107 @@
+﻿@model Isletmeler
+
+@{
+    ViewData["Title"] = "StandartListele";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+    var message = "Merhabalar. Size KirklareliSehir.Com Platformu aracılığı ile ulaşıyorum. Hizmetleriniz ile ilgili daha detaylı bilgi verebilir misiniz?";
+    var encodedMessage = Uri.EscapeDataString(message);
+}
+
+<link rel="stylesheet" href="~/lib/fancybox/css/jquery.fancybox.min.css" />
+<link rel="stylesheet" href="~/css/isletmeDetaylari.css" />
+
+<style>
+    .container img {
+        border: 2px solid white;
+    }
+</style>
+
+@if (Model != null)
+{
+    <div class="banner">
+        <img class="img-fluid" style="width:100%; height:700px;"
+             src="/IsletmelerinResmi/@Model.IsletmeResimi"
+             alt="@Model.ISletmeAdi Resimi" />
+        <h2 class="p-3">@Model.ISletmeAdi.ToUpper() Hoş Geldiniz</h2>
+    </div>
+
+    <div class="mb-5">
+        <div style="text-align: center; margin: 30px 0px">
+            <img class="mb-3" style="width: 300px; height:300px; margin: auto; border-radius:50%;" src="/IsletmelerinResmi/@Model.IsletmeLogo" alt="Logo" />
+            <h5>@Model.ISletmeAdi.ToUpper()</h5>
+        </div>
+        <div style="text-align:center;">
+            <p><img src="~/site/email.png" style="width:30px;"> @Model.IsletmeUyeMail</p>
+
+            <a class="btn btn-dark mb-3 px-4 py-3 font-weight-bold" href="tel:@Model.IsletmeTelefonNumarasi" style="width:300px;">
+                <img src="~/site/phon.png" style="width:30px;"> Aramak İçin Tıklayınız
+            </a>
+            <a class="btn btn-dark mb-3 px-4 py-3 font-weight-bold" href="https://www.instagram.com/@Model.IsletmeInstagram/" style="width:300px;">
+                <img src="~/site/inst.png" style="width:30px;"> İnstagram İçin Tıklayınız
+            </a>
+            <a class="btn btn-dark mb-3 px-4 py-3 font-weight-bolder" href="https://wa.me/@Model.IsletmeTelefonNumarasi?text=@encodedMessage" target="_blank" style="width:300px;">
+                <img src="~/site/what.png" style="width:30px;"> WhatsApp ile İletişime Geç
+            </a>
+
+            <p class="mb-4">
+                <img src="~/site/map.png" style="width:30px;">
+                @Model.IsletmeAcikKonum
+            </p>
+        </div>
+
+        <div class="pt-5 pb-2" style="background-color:black;">
+            <div class="container">
+                <div class="row d-flex mb-4">
+                    @for (int i = 1; i <= 6; i++)
+                    {
+                        var resim = Model.GetType().GetProperty($"IsletmeResimi{i}")?.GetValue(Model) as string;
+
+                        if (!string.IsNullOrEmpty(resim))
+                        {
+                            <div class="col-lg-4 col-md-4 col-xs-6 thumb mb-3">
+                                <a href="/IsletmelerinResmi/@resim" data-fancybox="gallery">
+                                    <img src="/IsletmelerinResmi/@resim" class="zoom img-fluid" alt="Resim @i">
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <h2 class="text-center mb-3">İşletme Hakkında</h2>
+            <p>
+                @Html.Raw(Model.ISletmeNot)
+            </p>
+        </div>
+    </div>
+}
+
+<!-- Fancybox JS -->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="/lib/jquery/dist/jquery.fancybox.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Initialize Fancybox
+        $('[data-fancybox="gallery"]').fancybox({
+            buttons: [
+                "slideShow",
+                "thumbs",
+                "zoom",
+                "fullScreen",
+                "share",
+                "close"
+            ],
+            loop: true,
+            protect: true
+        });
+
+        $(".zoom").hover(function () {
+            $(this).addClass('transition');
+        }, function () {
+            $(this).removeClass('transition');
+        });
+    });
+</script>

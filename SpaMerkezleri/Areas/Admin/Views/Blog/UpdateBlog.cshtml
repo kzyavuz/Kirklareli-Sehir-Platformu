@@ -1,0 +1,74 @@
+﻿
+@model UpdateBlogModel
+
+@{
+    ViewData["Title"] = "UpdateBlog";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <a class="btn btn-warning mb-1" asp-action="Index" asp-controller="Blog">Geri</a>
+    <div class="card">
+        <div class="card-header bg-primary">
+            <h4 class="card-title text-white">Şehrin Öne Çıkanı Güncelle</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="UpdateBlog" asp-controller="Blog" asp-area="Admin" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+                <div class="row mb-2">
+                    <div class="col-9">
+                        <div class="mb-2">
+                            <label>Başlık</label>
+                            <input type="text" asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Blog Kategorisi</label>
+                            <select class="form-control select2" asp-for="BlogCategory" required>
+                                <option>Seçiniz</option>
+                                @foreach (var tip in ViewBag.BlogCategory)
+                                {
+                                    <option value="@tip">@tip</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label>Kısa İçerik</label>
+                            <input type="text" asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="mb-2">
+                            <label>Detaylı İçerik</label>
+                            <textarea id="richEditor" asp-for="DetailDescription" class="form-control" rows="8"></textarea>
+                            <span asp-validation-for="DetailDescription" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-2">
+                            @{
+                                var imagePath = string.IsNullOrEmpty(Model.ImageUrl) ? Url.Content("~/blogImage/default_image.png") : Url.Content($"~/blogImage/{Model.ImageUrl}");
+                            }
+                            <img src="@imagePath" class="img-fluid" id="thumbnail" />
+                        </div>
+
+                        <div class="mb-2">
+                            <label>Resim Seçin</label>
+                            <input type="file" asp-for="NewImageFile" class="form-control custom-file-input" />
+                            <span asp-validation-for="NewImageFile" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <button type="submit" class="btn btn-primary w-100">Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script type="text/javascript" charset="utf-8" src="~/js/myFunction.js"></script>
+}
+

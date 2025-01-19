@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<AppUser> UserManager
+@inject SignInManager<AppUser> SignInManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .bg-professional {
+            background: linear-gradient(90deg, purple, red); /* Mor ile kırmızı geçişli arka plan */
+            border-radius: 10px;
+            color: white;
+        }
+
+        .crown-icon {
+            font-size: 24px;
+            color: gold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+         id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+            </a>
+        </div>
+        <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+        </div>
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            var user = await UserManager.GetUserAsync(User);
+
+            @if (user != null && user.UyeTipi == "PROFESYONEL")
+            {
+                <ul class="navbar-nav flex-row align-items-center ms-auto d-flex bg-professional px-4 py-2">
+                    <!-- Kral tacı ikonu -->
+                    <li>
+                        <i class="crown-icon bx bx-crown"></i>
+                    </li>
+                    <!-- Kullanıcı Bilgileri -->
+                    <li>
+                        <i class="bx bx-user me-2"></i>
+                    </li>
+                    <li>
+                        <span class="fw-semibold d-block">@user.UserName</span>
+                    </li>
+                </ul>
+            }
+            else
+            {
+                <ul class="navbar-nav flex-row align-items-center ms-auto d-flex bg-success px-4 py-2 text-white" style="border-radius: 10px;">
+                    <!-- User -->
+                    <li>
+                        <i class="bx bx-user me-2"></i>
+                    </li>
+                    <li>
+                        <span class="fw-semibold d-block">@user.UserName</span>
+                    </li>
+                </ul>
+            }
+        }
+        else
+        {
+            <p>Kullanıcı adı yok</p>
+        }
+    </nav>
+
+    <!-- diğer içerik -->
+</body>
+</html>

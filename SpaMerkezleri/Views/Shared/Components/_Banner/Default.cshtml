@@ -1,0 +1,10 @@
+﻿@model banner
+
+    <link href="~/css/banner.css" rel="stylesheet" />
+
+    @* Reklam alanı *@
+    <div class="m-3 reklam-banner p-0" margin-bottom:16px;">
+            <a href="@Model.BannerUrl" class="banner-link">
+                <img src="/bannerImage/@Model.BannerImg" class="banner-image" alt="Banner" />
+            </a>
+    </div>

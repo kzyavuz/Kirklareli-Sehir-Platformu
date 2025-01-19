@@ -1,0 +1,59 @@
+﻿@model List<AboutMe>
+@* Header ikonları *@
+<link href="~/css/header.css" rel="stylesheet" />
+
+<div class=" p-3 d-flex justify-content-between header-area align-items-center w-100" style="position: fixed; top: 0px; z-index: 10; height: 100px; background: linear-gradient(to right, #738c00 0%, #283606 100%); ">
+    @foreach (var item in Model)
+    {
+        <div class="col-example">
+            <a href="https://www.instagram.com/@item.instagram/">
+                <img class="icon" src="/icon/instagram.png" alt="instagram" />
+            </a>
+        </div>
+
+        <div class="col-example">
+            <a href="/Default/Index/" class="text-decoration-none d-flex">
+                <h1 class="mx-4" style="text-align: center; background: linear-gradient(to right, #ffffff 0%, #eeeeee 100%); -webkit-text-fill-color: transparent; background-clip: text;">@item.AboutName</h1>
+            </a>
+        </div>
+    }
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("member"))
+        {
+            <a href="~/Member/Profile/Index/" class="btn btn-light" style="float: left; font-weight: bold; background: linear-gradient(to right, #ffffff 0%, #eeeeee 100%); ">
+                <span class="symbol-input100">
+                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                </span>
+                Profilim
+            </a>
+        }
+        else if (User.IsInRole("admin"))
+        {
+            <a href="~/Admin/Rol/AdminList/" class="btn btn-warning" style="float: left; font-weight: bold; background: linear-gradient(to right, #122de2 0%, #ecff0d 100%); ">
+                <span class="symbol-input100">
+                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                </span>
+                Admin Profilim
+            </a>
+        }
+        else
+        {
+            <a href="/Member/MemberLogin/MSignIn/" class="btn btn-light" style="float: left; font-weight:bold; background: linear-gradient(to right, #ffffff 0%, #eeeeee 100%); ">
+                <span class="symbol-input100">
+                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                </span>
+                Giriş Yap
+            </a>
+        }
+    }
+    else
+    {
+        <a href="/Member/MemberLogin/MSignIn/" class="btn btn-light" style="float: left; font-weight: bold; background: linear-gradient(to right, #ffffff 0%, #eeeeee 100%); ">
+            <span class="symbol-input100">
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+            </span>
+            Giriş Yap
+        </a>
+    }
+</div>
